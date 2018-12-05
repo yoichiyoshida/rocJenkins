@@ -4,6 +4,9 @@
 package org.docker
 
 
+import org.jenkinsci.plugins.docker.workflow.*
+
+
 class docker_image implements Serializable
 {
     docker.image image
