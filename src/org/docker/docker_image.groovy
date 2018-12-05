@@ -2,6 +2,7 @@
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 package org.docker
+import org.project.*
 
 
 import org.jenkinsci.plugins.docker.workflow.*
