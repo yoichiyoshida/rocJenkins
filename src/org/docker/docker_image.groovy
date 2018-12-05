@@ -9,7 +9,7 @@ import org.jenkinsci.plugins.docker.workflow.*
 
 class docker_image implements Serializable
 {
-    docker.image image
+    def image
     docker_image(docker_data docker_args, project_paths paths)
     {
 	String build_image_name = "build-rocblas-hip-artifactory"
