@@ -11,12 +11,12 @@ import org.jenkinsci.plugins.docker.workflow.*
 class docker_image implements Serializable
 {
     def image
-    def script
+    def stage
     String build_image_name
     
-    docker_image(def script, docker_data docker_args, project_paths paths)
+    docker_image(def stage, docker_data docker_args, project_paths paths)
     {
-	this.script = script
+	this.stage = stage
 	build_image_name = "build-rocblas-hip-artifactory"
     }
 /*	
