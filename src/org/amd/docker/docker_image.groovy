@@ -20,7 +20,7 @@ class docker_image implements Serializable
 	build_image_name = "build-rocblas-hip-artifactory"
     }
 
-    init()
+    void init()
     {
 	stage.dir( paths.project_src_prefix )
 	{
