@@ -15,6 +15,8 @@ class docker_image implements Serializable
     {
 	String build_image_name = "build-rocblas-hip-artifactory"
 	def build_image = null
+	sh "pwd"
+/*	
 	script {
 	dir( paths.project_src_prefix )
 	{
@@ -28,6 +30,7 @@ class docker_image implements Serializable
 	    sh "docker build -t ${paths.project_name}/${build_image_name}:latest -f docker/${docker_args.build_docker_file} ${docker_args.docker_build_args} --build-arg user_uid=${user_uid} --build-arg base_image=${docker_args.from_image} ."
 	    image = docker.image( "${paths.project_name}/${build_image_name}:latest" )
 	    }
+*/
 	}
     }
 }
