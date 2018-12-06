@@ -13,8 +13,8 @@ class docker_image implements Serializable
     def image
     def stage
     String build_image_name
-    docker_data docker_args
-    project_paths paths
+    def docker_args
+    def  paths
     
     docker_image(def stage, docker_data docker_args, project_paths paths)
     {
