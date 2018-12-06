@@ -12,13 +12,13 @@ class docker_image implements Serializable
 {
     def image
     def script
+    String build_image_name
     
     docker_image(def script, docker_data docker_args, project_paths paths)
     {
 	this.script = script
-	String build_image_name = "build-rocblas-hip-artifactory"
-	def build_image = null
-	this.script.sh "pwd"
+	build_image_name = "build-rocblas-hip-artifactory"
+    }
 /*	
 	script {
 	dir( paths.project_src_prefix )
