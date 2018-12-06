@@ -4,7 +4,7 @@
 package org.docker
 import org.project.*
 import org.docker.*
-
+import java.nio.file.Path;
 import org.jenkinsci.plugins.docker.workflow.*
 
 
