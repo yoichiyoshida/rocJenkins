@@ -3,7 +3,7 @@
  * ************************************************************************ */
 package org.docker
 import org.project.*
-
+import org.docker.*
 
 import org.jenkinsci.plugins.docker.workflow.*
 
