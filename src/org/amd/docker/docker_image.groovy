@@ -13,11 +13,15 @@ class docker_image implements Serializable
     def image
     def stage
     String build_image_name
+    docker_data docker_args
+    project_paths paths
     
     docker_image(def stage, docker_data docker_args, project_paths paths)
     {
 	this.stage = stage
 	build_image_name = "build-rocblas-hip-artifactory"
+	this.docker_args = docker_args
+	this.paths = paths 
     }
 
     void init()
