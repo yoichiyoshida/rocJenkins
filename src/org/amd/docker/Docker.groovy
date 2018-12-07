@@ -29,7 +29,7 @@ class Docker implements Serializable
 
 		// JENKINS-44836 workaround by using a bash script instead of docker.build()
 		node.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${docker_args.build_docker_file} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
-		image = node.docker.image( "${paths.project_name}/${buildImageName:latest" )
+		image = node.docker.image( "${paths.project_name}/${buildImageName}:latest" )
 	}
     }
 
