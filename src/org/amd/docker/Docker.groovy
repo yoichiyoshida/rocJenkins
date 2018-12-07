@@ -15,7 +15,8 @@ class Docker implements Serializable
     
     def container
     def node
-
+    def paths
+    
     void BuildImage()
     {
 	node.dir( paths.project_src_prefix )
@@ -27,8 +28,8 @@ class Docker implements Serializable
 		// build_image = docker.build( "${paths.project_name}/${build_image_name}:latest", "--pull -f docker/${build_docker_file} --build-arg user_uid=${user_uid} --build-arg base_image=${from_image} ." )
 
 		// JENKINS-44836 workaround by using a bash script instead of docker.build()
-		node.sh "docker build -t ${paths.project_name}/${build_image_name}:latest -f docker/${docker_args.build_docker_file} ${docker_args.docker_build_args} --build-arg user_uid=${user_uid} --build-arg base_image=${docker_args.from_image} ."
-		image = node.docker.image( "${paths.project_name}/${build_image_name}:latest" )
+		node.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${docker_args.build_docker_file} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
+		image = node.docker.image( "${paths.project_name}/${buildImageName:latest" )
 	}
     }
 
