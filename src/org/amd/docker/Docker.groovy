@@ -20,9 +20,9 @@ class Docker implements Serializable
     void BuildImage()
     {
 	println 'Hello from Saad'
-	node.stage("Build Docker Container")
-	{
-	    echo "Saad"
+//	node.stage("Build Docker Container")
+//	{
+//	    echo "Saad"
 /*	    node.stage.dir( paths.project_src_prefix )
 	    {
 		def user_uid = node.stage.sh(script: 'id -u', returnStdout: true ).trim()
@@ -35,7 +35,7 @@ class Docker implements Serializable
 		node.stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${docker_args.build_docker_file} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
 		image = node.stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
 	    }*/
-	}
+//	}
     }
 
 /*    
