@@ -17,9 +17,9 @@ class Docker implements Serializable
     def node
     def paths
     
-    void BuildImage()
+    void buildImage()
     {
-	node.println 'Hello from Saad'
+//	node.println 'Hello from Saad'
 //	node.stage("Build Docker Container")
 //	{
 //	    echo "Saad"
