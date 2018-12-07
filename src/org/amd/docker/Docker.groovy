@@ -19,7 +19,7 @@ class Docker implements Serializable
     
     void BuildImage()
     {
-	println 'Hello from Saad'
+	node.println 'Hello from Saad'
 //	node.stage("Build Docker Container")
 //	{
 //	    echo "Saad"
