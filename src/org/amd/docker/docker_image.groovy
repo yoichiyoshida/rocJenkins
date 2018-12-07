@@ -36,7 +36,7 @@ class docker_image implements Serializable
 
 	    // JENKINS-44836 workaround by using a bash script instead of docker.build()
 	    stage.sh "docker build -t ${paths.project_name}/${build_image_name}:latest -f docker/${docker_args.build_docker_file} ${docker_args.docker_build_args} --build-arg user_uid=${user_uid} --build-arg base_image=${docker_args.from_image} ."
-	    image = docker.image( "${paths.project_name}/${build_image_name}:latest" )
+	    image = stage.docker.image( "${paths.project_name}/${build_image_name}:latest" )
 	}
     }
 }
