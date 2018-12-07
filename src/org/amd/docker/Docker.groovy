@@ -16,7 +16,7 @@ class Docker implements Serializable
     def container
     def node
 
-    BuildImage()
+    void BuildImage()
     {
 
 	{
