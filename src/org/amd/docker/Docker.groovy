@@ -18,10 +18,8 @@ class Docker implements Serializable
 
     void BuildImage()
     {
-
+	node.dir( paths.project_src_prefix )
 	{
-	    node.dir( paths.project_src_prefix )
-	    {
 		def user_uid = node.sh(script: 'id -u', returnStdout: true ).trim()
 		
 		// Docker 17.05 introduced the ability to use ARG values in FROM statements
@@ -31,11 +29,9 @@ class Docker implements Serializable
 		// JENKINS-44836 workaround by using a bash script instead of docker.build()
 		node.sh "docker build -t ${paths.project_name}/${build_image_name}:latest -f docker/${docker_args.build_docker_file} ${docker_args.docker_build_args} --build-arg user_uid=${user_uid} --build-arg base_image=${docker_args.from_image} ."
 		image = node.docker.image( "${paths.project_name}/${build_image_name}:latest" )
-		}
-	    }
 	}
-	
     }
+
 /*    
     UploadDockerHub(String RemoteOrg)
     {
