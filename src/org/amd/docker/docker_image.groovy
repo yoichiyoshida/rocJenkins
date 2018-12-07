@@ -28,7 +28,7 @@ class docker_image implements Serializable
     {
 	stage.dir( paths.project_src_prefix )
 	{
-	    def user_uid = stage.sh("id -u", returnStdout: true ).trim()
+	    def user_uid = stage.sh(script: 'id -u', returnStdout: true ).trim()
 
 	    // Docker 17.05 introduced the ability to use ARG values in FROM statements
 	    // Docker inspect failing on FROM statements with ARG https://issues.jenkins-ci.org/browse/JENKINS-44836
