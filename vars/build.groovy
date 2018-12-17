@@ -1,7 +1,7 @@
 /* ************************************************************************
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
-import org.project.project_paths;
+import org.amd.project.project_paths;
 
 ////////////////////////////////////////////////////////////////////////
 // -- BUILD RELATED FUNCTIONS

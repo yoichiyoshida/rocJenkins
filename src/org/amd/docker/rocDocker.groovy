@@ -1,7 +1,7 @@
 /* ************************************************************************
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
-package org.docker
+package org.amd.docker
 
 // Docker related variables gathered together to reduce parameter bloat on function calls
 class rocDocker implements Serializable
