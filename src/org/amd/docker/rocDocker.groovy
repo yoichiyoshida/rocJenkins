@@ -35,7 +35,16 @@ class rocDocker implements Serializable
             image.inside( runArgs, insideClosure )
             inside()
             {
-                insideClosure
+        sh '''
+            find . -iname \'*.h\' \
+                -o -iname \'*.hpp\' \
+                -o -iname \'*.cpp\' \
+                -o -iname \'*.h.in\' \
+                -o -iname \'*.hpp.in\' \
+                -o -iname \'*.cpp.in\' \
+            | grep -v 'build/' \
+            | xargs -n 1 -P 1 -I{} -t sh -c \'clang-format-3.8 -style=file {} | diff - {}\'
+        '''
             }
 	    }
     }
