@@ -51,7 +51,12 @@ class rocDocker implements Serializable
 
     def inside(Closure body)
     {
-        image.inside(runArgs, body())
+        image.inside(runArgs)
+        {
+            body()
+        }
+        
+        
     }
     
 /*    
