@@ -7,7 +7,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, Closure body)
     {
         stage ("Checkout source code")
         {
-            build.checkout(paths)
+            //build.checkout(paths)
         }
         
         stage ("Build Docker Container")
