@@ -14,13 +14,13 @@ class rocDocker implements Serializable
     String buildImageName
     
     def image
-    def node
+    def stage
     def paths
     
     void buildImage()
     {
 //	    echo "Saad"
-	    node.stage.dir( paths.project_src_prefix )
+	    stage.dir( paths.project_src_prefix )
 	    {
 		def user_uid = node.stage.sh(script: 'id -u', returnStdout: true ).trim()
 		
@@ -29,8 +29,8 @@ class rocDocker implements Serializable
 		// build_image = docker.build( "${paths.project_name}/${build_image_name}:latest", "--pull -f docker/${build_docker_file} --build-arg user_uid=${user_uid} --build-arg base_image=${from_image} ." )
 	    
 		// JENKINS-44836 workaround by using a bash script instead of docker.build()
-		node.stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${docker_args.build_docker_file} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
-		image = node.stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
+		stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${docker_args.build_docker_file} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
+		image = stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
 	    }
 //	}
     }
