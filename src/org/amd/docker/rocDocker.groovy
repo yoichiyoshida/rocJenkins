@@ -12,7 +12,7 @@ class rocDocker implements Serializable
     String runArgs
     String buildArgs
     String buildImageName
-    String insideClosure
+    def insideClosure
     
     def image
     def stage
