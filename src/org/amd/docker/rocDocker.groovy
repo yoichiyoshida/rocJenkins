@@ -13,11 +13,11 @@ class rocDocker implements Serializable
     String buildArgs
     String buildImageName
     
-    def image
+    //def image
     def stage
     def paths
     
-    void buildImage()
+    void buildImage(def stage)
     {
 //	    echo "Saad"
 	    stage.dir( paths.project_src_prefix )

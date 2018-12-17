@@ -15,8 +15,8 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, Closure body)
         {
             echo "Boo"
             // Create/reuse a docker image that represents the rocprim build environment
-            docker.stage = stage
-            docker.buildImage()
+            //docker.stage = stage
+            docker.buildImage(stage)
             // Print system information for the log
             docker.image.inside( docker_args.docker_run_args, docker_inside_closure )    
         }
