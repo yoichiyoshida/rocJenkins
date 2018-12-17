@@ -8,17 +8,17 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, Closure body)
         stage ("Checkout source code")
         {
             echo "Saa"
-            //build.checkout(paths)
+            build.checkout(paths)
         }
         
         stage ("Build Docker Container")
         {
             echo "Boo"
             // Create/reuse a docker image that represents the rocprim build environment
-            //docker.node = this
-            //docker.buildImage()
+            docker.node = this
+            docker.buildImage()
             // Print system information for the log
-            //docker.image.inside( docker_args.docker_run_args, docker_inside_closure )    
+            docker.image.inside( docker_args.docker_run_args, docker_inside_closure )    
         }
     
     
