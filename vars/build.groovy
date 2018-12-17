@@ -9,7 +9,7 @@ import org.project.project_paths;
 ////////////////////////////////////////////////////////////////////////
 // Checkout source code, source dependencies and update version number numbers
 // Returns a relative path to the directory where the source exists in the workspace
-void checkout_and_version( project_paths paths )
+void checkout( project_paths paths )
 {
     paths.project_src_prefix = paths.src_prefix + '/' + paths.project_name
 
