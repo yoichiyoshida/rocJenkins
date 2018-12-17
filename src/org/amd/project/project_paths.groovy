@@ -14,7 +14,7 @@ class project_paths implements Serializable
     String project_build_prefix
     String build_command
     
-    construct_build_prefix()
+    void construct_build_prefix()
     {
         project_build_prefix = build_prefix + '/' + project_name;
     }
