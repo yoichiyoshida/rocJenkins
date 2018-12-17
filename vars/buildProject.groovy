@@ -18,7 +18,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, Closure body)
             //docker.stage = stage
             docker.buildImage(this)
             // Print system information for the log
-            //docker.image.inside( docker_args.docker_run_args, docker_inside_closure )    
+            docker.image.inside( docker.runArgs, docker.insideClosure )    
         }
     
     
