@@ -1,27 +1,30 @@
-import org.amd.project.project_paths;
+/* ************************************************************************
+ * Copyright 2018 Advanced Micro Devices, Inc.
+ * ************************************************************************ */
+
+import org.amd.project.*;
 import org.amd.docker.rocDocker;
 
-def call(String nodeLogic, project_paths paths, rocDocker docker, Closure body)
+def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, Closure body)
 {   
     node ( nodeLogic )
     {
         stage ("Checkout source code")
         {
-            echo "Saa"
             build.checkout(paths)
         }
         
         stage ("Build Docker Container")
         {
-            echo "Boo"
-            // Create/reuse a docker image that represents the rocprim build environment
-            //docker.stage = stage
+            // Build a docker image that represents the library build environment
             docker.buildImage(this)
-            // Print system information for the log
-            docker.image.inside( docker.runArgs, docker.insideClosure )    
         }
     
-    
+        stage ("Compile Library")
+        {
+        
+        }
+        
     body()
     }
 
