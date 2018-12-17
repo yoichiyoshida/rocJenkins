@@ -1,5 +1,5 @@
-import org.project.project_paths;
-import org.project.docker_image;
+import org.amd.project.project_paths;
+import org.amd.docker.docker_image;
 
 def call(String nodeLogic, project_paths paths, rocDocker docker, Closure body)
 {   
