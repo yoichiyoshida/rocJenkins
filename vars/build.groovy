@@ -23,5 +23,7 @@ void checkout( project_paths paths )
 		extensions: scm.extensions + [[$class: 'CleanCheckout']],
 		userRemoteConfigs: scm.userRemoteConfigs
 	    ])
+        
+    paths.construct_build_prefix()    
     }
 }

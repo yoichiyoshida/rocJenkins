@@ -4,7 +4,7 @@
 package org.docker
 
 // Docker related variables gathered together to reduce parameter bloat on function calls
-class Docker implements Serializable
+class rocDocker implements Serializable
 {
     String baseImage
     String buildDockerfile
@@ -13,18 +13,14 @@ class Docker implements Serializable
     String buildArgs
     String buildImageName
     
-    def container
+    def image
     def node
     def paths
     
     void buildImage()
     {
-
-//	node.println 'Hello from Saad'
-//	node.stage("Build Docker Container")
-//	{
 //	    echo "Saad"
-/*	    node.stage.dir( paths.project_src_prefix )
+	    node.stage.dir( paths.project_src_prefix )
 	    {
 		def user_uid = node.stage.sh(script: 'id -u', returnStdout: true ).trim()
 		
@@ -35,7 +31,7 @@ class Docker implements Serializable
 		// JENKINS-44836 workaround by using a bash script instead of docker.build()
 		node.stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${docker_args.build_docker_file} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
 		image = node.stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
-	    }*/
+	    }
 //	}
     }
 
