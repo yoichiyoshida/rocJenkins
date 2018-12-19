@@ -16,8 +16,15 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
             build.checkout(paths)
         }
         
+        stage ("Build Docker Container")
+        {
+            // Build a docker image that represents the library build environment
+            docker.buildImage(this)
+        }           
         body()
     }
 
+ 
+    
 }
 
