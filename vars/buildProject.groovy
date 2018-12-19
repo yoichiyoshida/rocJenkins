@@ -5,7 +5,7 @@
 import org.amd.project.*;
 import org.amd.docker.rocDocker;
 
-def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, Closure body)
+def call(String nodeLogic, project_paths paths, rocDocker docker1, compiler_data hcc_compiler_args, Closure body)
 {   
     node ( nodeLogic )
     {
@@ -17,7 +17,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
         stage ("Build Docker Container")
         {
             // Build a docker image that represents the library build environment
-            docker.buildImage(this)
+            docker1.buildImage(this)
         }
     
         stage ("Compile Library")
