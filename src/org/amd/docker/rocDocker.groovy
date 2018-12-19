@@ -1,4 +1,4 @@
-/* ************************************************************************
+\0;136;0c/* ************************************************************************
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 package org.amd.docker
@@ -20,8 +20,8 @@ class rocDocker implements Serializable
     
     void buildImage(def stage)
     {
-	    stage.dir( paths.project_src_prefix )
-	    {
+	stage.dir( paths.project_src_prefix )
+	{
             def user_uid = stage.sh(script: 'id -u', returnStdout: true ).trim()
             
             // Docker 17.05 introduced the ability to use ARG values in FROM statements
@@ -33,19 +33,7 @@ class rocDocker implements Serializable
             image = stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
             // Print system information for the log
             image.inside( runArgs, insideClosure )
-            inside()
-            {
-echo "Hello"
-            }
-	    }
-    }
-
-    def inside(Closure body)
-    {
-	def blah = body
-        image.inside(runArgs, body())
-        
-        
+	}
     }
     
 /*    
