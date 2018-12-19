@@ -20,9 +20,9 @@ def call(String nodeLogic, project_paths paths, rocDocker docker1, compiler_data
             docker1.buildImage(this)
         }
     
-        stage ("Compile Library")
+        /*stage ("Compile Library")
         {
-            */docker.image.inside(docker.runArgs)
+            docker.image.inside(docker.runArgs)
             {
                 withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
                 {
@@ -33,8 +33,8 @@ def call(String nodeLogic, project_paths paths, rocDocker docker1, compiler_data
                       LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${paths.build_command}
                     """
                 }                
-            }*/
-        }
+            }
+        }*/
         
     body()
     }
