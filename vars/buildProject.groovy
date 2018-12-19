@@ -11,7 +11,12 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
     {
         echo "Starting Jenkins Job"
         
-        //body()
+        stage ("Checkout source code")
+        {
+            build.checkout(paths)
+        }
+        
+        body()
     }
 
 }

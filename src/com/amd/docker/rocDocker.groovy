@@ -16,7 +16,6 @@ class rocDocker implements Serializable
     def insideClosure
     
     def image
-    //def stage
     def paths
     
     void buildImage(def stage)
