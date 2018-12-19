@@ -1,7 +1,7 @@
 /* ************************************************************************
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
-package org.amd.docker
+package com.amd.docker
 import java.nio.file.Path;
 
 // Docker related variables gathered together to reduce parameter bloat on function calls
