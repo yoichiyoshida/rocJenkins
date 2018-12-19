@@ -2,7 +2,7 @@
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 
-package org.project
+package com.amd.project
 
 // Docker related variables gathered together to reduce parameter bloat on function calls
 class compiler_data implements Serializable

@@ -2,7 +2,7 @@
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 
-package org.amd.project
+package com.amd.project
 
 // Paths variables bundled together to reduce parameter bloat on function calls
 class project_paths implements Serializable

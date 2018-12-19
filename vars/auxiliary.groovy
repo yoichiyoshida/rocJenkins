@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////
 // -- AUXILLARY HELPER FUNCTIONS
 import java.nio.file.Path;
-import org.project.project_paths;
-import org.project.compiler_data;
+import com.amd.project.project_paths;
+import com.amd.project.compiler_data;
 
 ////////////////////////////////////////////////////////////////////////
 // Check whether job was started by a timer
