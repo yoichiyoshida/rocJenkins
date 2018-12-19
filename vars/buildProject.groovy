@@ -22,7 +22,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
     
         stage ("Compile Library")
         {
-            docker.image.inside()
+            docker.image.inside(docker.runArgs)
             {
                 withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
                 {
