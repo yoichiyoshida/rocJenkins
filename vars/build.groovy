@@ -1,7 +1,7 @@
 /* ************************************************************************
  * Copyright 2018 Advanced Micro Devices, Inc.
  * ************************************************************************ */
-import org.amd.project.project_paths;
+import com.amd.project.project_paths;
 import java.nio.file.Path;
 
 ////////////////////////////////////////////////////////////////////////
