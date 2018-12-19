@@ -9,6 +9,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
 {   
     node ( nodeLogic )
     {
+        echo "Starting Jenkins Job"
         
         //body()
     }
