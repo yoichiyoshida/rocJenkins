@@ -32,7 +32,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
                   // Build library & clients
                   sh  """#!/usr/bin/env bash
                       set -x
-                      cd ${paths.build_prefix}
+                      cd ${paths.project_build_prefix}
                       LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${paths.build_command}
                     """
                 }                
