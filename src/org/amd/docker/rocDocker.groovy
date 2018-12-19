@@ -43,10 +43,7 @@ echo "Hello"
     def inside(Closure body)
     {
 	def blah = body
-        image.inside(runArgs)
-        {
-	    blah()
-        }
+        image.inside(runArgs, body())
         
         
     }
