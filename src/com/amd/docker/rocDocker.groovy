@@ -13,7 +13,17 @@ class rocDocker implements Serializable
     String runArgs
     String buildArgs
     String buildImageName
-    def insideClosure
+    def insideClosure = 
+    {
+      sh  """
+          set -x
+          /opt/rocm/bin/hcc --version
+          pwd
+          dkms status
+      whoami
+      id
+        """
+    }        
     
     def image
     def paths
