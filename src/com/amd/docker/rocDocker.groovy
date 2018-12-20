@@ -13,17 +13,14 @@ class rocDocker implements Serializable
     String runArgs
     String buildArgs
     String buildImageName
-    def insideClosure = 
-    {
-      sh  """
+    def insideClosure = """
           set -x
           /opt/rocm/bin/hcc --version
           pwd
           dkms status
       whoami
       id
-        """
-    }        
+        """      
     
     def image
     def paths
@@ -42,7 +39,7 @@ class rocDocker implements Serializable
                 stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${buildDockerfile} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
                 image = stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
                 // Print system information for the log
-                image.inside( runArgs, insideClosure )
+                image.inside( runArgs, stage.sh(insideClosure) )
         }
     }
     
