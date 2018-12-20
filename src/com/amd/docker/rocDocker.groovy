@@ -24,7 +24,7 @@ class rocDocker implements Serializable
     def image
     def paths
     
-    def buildImage(def stage)
+    void buildImage(def stage)
     {    
         stage.dir( paths.project_src_prefix )
         {
