@@ -22,7 +22,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
             docker.buildImage(this)
         }
 
-        stage ("Compile Library")
+        /*stage ("Compile Library")
         {
             paths.construct_build_prefix()
             docker.image.inside(docker.runArgs)
@@ -37,7 +37,7 @@ def call(String nodeLogic, project_paths paths, rocDocker docker, compiler_data 
                     """
                 }                
             }
-        }
+        }*/
         
         body()
     }
