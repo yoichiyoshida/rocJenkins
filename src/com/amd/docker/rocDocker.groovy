@@ -26,6 +26,14 @@ class rocDocker implements Serializable
     
     void buildImage(def stage)
     {
+    insideClosure = """
+          set -x
+          /opt/rocm/bin/hcc --version
+          pwd
+          dkms status
+      whoami
+      id"""  
+    
         stage.dir( paths.project_src_prefix )
         {
                 def user_uid = stage.sh(script: 'id -u', returnStdout: true ).trim()
