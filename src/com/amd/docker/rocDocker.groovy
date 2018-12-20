@@ -19,7 +19,7 @@ class rocDocker implements Serializable
           pwd
           dkms status
       whoami
-      id"""      
+      """      
     
     def image
     def paths
