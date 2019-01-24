@@ -45,7 +45,7 @@ def call(String nodeLogic, boolean runFormatCheck  boolean buildPackage, project
                 }                
             }
         }
-
+/*
 	stage ("Test Library")
 	{
 	    docker.image.inside(docker.runArgs)
@@ -53,7 +53,7 @@ def call(String nodeLogic, boolean runFormatCheck  boolean buildPackage, project
       // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
       timeout(time: 4, unit: 'HOURS')
       {
-        if(isJobStartedByTimer())
+        if(auxiliary.isJobStartedByTimer())
         {
           sh """#!/usr/bin/env bash
                 set -x
@@ -117,6 +117,7 @@ def call(String nodeLogic, boolean runFormatCheck  boolean buildPackage, project
             }
         }
     }
+    */
 	body()
     }
 
