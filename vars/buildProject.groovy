@@ -45,7 +45,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 }                
             }
         }
-/*
+
 	stage ("Test Library")
 	{
 	    docker.image.inside(docker.runArgs)
@@ -74,7 +74,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 }
 	    }
 	}
-
+/*
     if (buildPackage)
     {
         stage ("Build Package")
