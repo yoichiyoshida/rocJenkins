@@ -5,7 +5,7 @@
 import com.amd.project.*
 import com.amd.docker.rocDocker
 
-def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, Closure body)
+def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, rocTest libTest, Closure body)
 {   
     node ( nodeLogic )
     {
@@ -53,16 +53,11 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
           // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
           timeout(time: 4, unit: 'HOURS')
           {
-            def test_command
-            if(auxiliary.isJobStartedByTimer())
-                test_command = paths.test_command_nightly
-            else
-                test_command = paths.test_command
                 
             sh """#!/usr/bin/env bash
                 set -x
-                cd ${paths.project_build_prefix}
-                LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${paths.test_command_nightly}
+                cd ${rocTest.testDirectory}
+                LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${rocTest.testCommand}
             """
           }
         }

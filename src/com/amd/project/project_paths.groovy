@@ -13,12 +13,12 @@ class project_paths implements Serializable
     String build_prefix = 'src'
     String project_build_prefix 
     String build_command = './install -c' 
-    String test_command
-    String test_command_nightly
+
     
     void construct_build_prefix()
     {
         project_build_prefix = build_prefix + '/' + project_name;
+        test_directory = project_build_prefix + '/' + test
     }
     
 }
