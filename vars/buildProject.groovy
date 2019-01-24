@@ -56,8 +56,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 
             sh """#!/usr/bin/env bash
                 set -x
-                cd ${rocTest.testDirectory}
-                LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${rocTest.testCommand}
+                cd ${paths.project_build_prefix}
+                cd ${libTest.testDirectory}
+                LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
             """
           }
         }
