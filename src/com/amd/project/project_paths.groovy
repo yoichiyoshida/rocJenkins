@@ -18,7 +18,6 @@ class project_paths implements Serializable
     void construct_build_prefix()
     {
         project_build_prefix = build_prefix + '/' + project_name;
-        test_directory = project_build_prefix + '/' + test
     }
     
 }
