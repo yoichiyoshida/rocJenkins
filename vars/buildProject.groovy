@@ -5,7 +5,7 @@
 import com.amd.project.*
 import com.amd.docker.rocDocker
 
-def call(String nodeLogic, boolean runFormatCheck  boolean buildPackage, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, Closure body)
+def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, Closure body)
 {   
     node ( nodeLogic )
     {
