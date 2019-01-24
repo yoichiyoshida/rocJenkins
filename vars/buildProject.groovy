@@ -53,25 +53,17 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
           // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
           timeout(time: 4, unit: 'HOURS')
           {
+            def test_command
             if(auxiliary.isJobStartedByTimer())
-            {
-              sh """#!/usr/bin/env bash
-                    set -x
-                    cd ${paths.project_build_prefix}/build/release/clients/staging
-                    LD_LIBRARY_PATH=/opt/rocm/hcc/lib ./rocblas-test${build_type_postfix} --gtest_output=xml --gtest_color=yes --gtest_filter=*nightly*-*known_bug* #--gtest_filter=*nightly*
-                """
-              junit "${paths.project_build_prefix}/build/release/clients/staging/*.xml"
-            }
+                test_command = paths.test_command_nightly
             else
-            {
-              sh """#!/usr/bin/env bash
-                    set -x
-                    cd ${paths.project_build_prefix}/build/release/clients/staging
-                    LD_LIBRARY_PATH=/opt/rocm/hcc/lib ./example-sscal${build_type_postfix}
-                    LD_LIBRARY_PATH=/opt/rocm/hcc/lib ./rocblas-test${build_type_postfix} --gtest_output=xml --gtest_color=yes  --gtest_filter=*quick*:*pre_checkin*-*known_bug* #--gtest_filter=*checkin*
-                """
-              junit "${paths.project_build_prefix}/build/release/clients/staging/*.xml"
-            }
+                test_command = paths.test_command
+                
+            sh """#!/usr/bin/env bash
+                set -x
+                cd ${paths.project_build_prefix}
+                LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${paths.test_command_nightly}
+            """
           }
         }
     }
