@@ -8,11 +8,13 @@ package com.amd.project
 class project_paths implements Serializable
 {
     String project_name
-    String src_prefix
+    String src_prefix ='src'
     String project_src_prefix
-    String build_prefix
-    String project_build_prefix
-    String build_command
+    String build_prefix = 'src'
+    String project_build_prefix 
+    String build_command = './install -c' 
+    String test_command
+    String test_command_nightly
     
     void construct_build_prefix()
     {
