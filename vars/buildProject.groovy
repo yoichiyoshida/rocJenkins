@@ -5,7 +5,7 @@
 import com.amd.project.*
 import com.amd.docker.rocDocker
 
-def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data hcc_compiler_args, rocTests libTest, Closure body)
+def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {   
     node ( nodeLogic )
     {
@@ -48,7 +48,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             paths.construct_build_prefix()
             docker.image.inside(docker.runArgs)
             {
-                withEnv(["CXX=${hcc_compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
+                withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
                 {
                   // Build library & clients
                   sh  """#!/usr/bin/env bash
@@ -85,7 +85,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             docker.image.inside(docker.runArgs)
             {
-            withEnv(["CXX=${hcc_compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
+            withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
             {
                 String docker_context = "${compiler_args.build_config}/${compiler_args.compiler_name}"
                 if( compiler_args.compiler_name.toLowerCase( ).startsWith( 'hcc-' ) )
