@@ -13,6 +13,16 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         
         stage ("Checkout source code")
         {
+            def print_version_closure = {
+              sh  """
+                  set -x
+                  /opt/rocm/bin/hcc --version
+                  pwd
+                  dkms status
+              whoami
+              id
+                """
+            }        
             build.checkout(paths)
         }
 
@@ -26,6 +36,8 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Format Check")
             {
+		command = """hostname"""
+		docker.runCommand(command)
             }
         }
         
@@ -50,20 +62,21 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 	{
 	    docker.image.inside(docker.runArgs)
 	    {
-          // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
-          timeout(time: 4, unit: 'HOURS')
-          {
+	    // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
+            timeout(time: 4, unit: 'HOURS')
+            {
                 
-            sh """#!/usr/bin/env bash
+             sh """#!/usr/bin/env bash
                 set -x
                 cd ${paths.project_build_prefix}
                 cd ${libTest.testDirectory}
                 LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
             """
-          }
+		    
+	    }
         }
     }
-/*
+
     if (buildPackage)
     {
         stage ("Build Package")
@@ -106,7 +119,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             }
         }
     }
-    */
+
 	body()
     }
 

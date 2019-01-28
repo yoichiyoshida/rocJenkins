@@ -44,6 +44,14 @@ class rocDocker implements Serializable
                 }
         }
     }
+
+    void runCommand(def command)
+    {
+	image.inside(runArgs)
+	{
+	    stage.sh(command)
+	}
+    }
     
 /*    
     void UploadDockerHub(String RemoteOrg)
