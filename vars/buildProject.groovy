@@ -6,23 +6,13 @@ import com.amd.project.*
 import com.amd.docker.rocDocker
 
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
-{   
+{
     node ( nodeLogic )
     {
         echo "Starting Jenkins Job"
-        
+
         stage ("Checkout source code")
         {
-            def print_version_closure = {
-              sh  """
-                  set -x
-                  /opt/rocm/bin/hcc --version
-                  pwd
-                  dkms status
-              whoami
-              id
-                """
-            }        
             build.checkout(paths)
         }
 
@@ -36,11 +26,14 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Format Check")
             {
-                def command = """hostname"""
+                def command = """
+                            hostname
+                            echo "Format check disabled"
+                            """
                 docker.runCommand(this, command)
             }
         }
-        
+
         stage ("Compile Library")
         {
             paths.construct_build_prefix()
@@ -54,7 +47,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                       cd ${paths.project_build_prefix}
                       LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${paths.build_command}
                     """
-                }                
+                }
             }
         }
 
@@ -65,14 +58,14 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
                 timeout(time: 4, unit: 'HOURS')
                 {
-                    
+
                  sh """#!/usr/bin/env bash
                     set -x
                     cd ${paths.project_build_prefix}
                     cd ${libTest.testDirectory}
                     LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
                 """
-                
+
             }
             }
         }
