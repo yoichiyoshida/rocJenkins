@@ -31,6 +31,14 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             echo "Format check disabled"
                             """
                 docker.runCommand(this, command)
+                stage ("testing")
+                {
+                def command1 = """
+                            hostname
+                            echo "Format check disabled"
+                            """
+                docker.runCommand(this, command1)                
+                }
             }
         }
 
