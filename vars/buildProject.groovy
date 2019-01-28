@@ -122,8 +122,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         }
     }
 
-	body()
+	
     } 
+	body()
 }
     
 
