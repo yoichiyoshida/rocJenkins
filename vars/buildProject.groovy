@@ -36,9 +36,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Format Check")
             {
-		def command = """
-                          hostname
-                          """
+		//def command = """
+                //          hostname
+                 //         """
 		//docker.runCommand(this, command)
             }
         }
@@ -123,9 +123,8 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
     }
 
 	body()
-    }
-
- 
-    
+    } 
 }
+    
+
 
