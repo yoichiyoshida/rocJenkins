@@ -36,10 +36,10 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Format Check")
             {
-		//def command = """
+        //def command = """
                 //          hostname
                  //         """
-		//docker.runCommand(this, command)
+        //docker.runCommand(this, command)
             }
         }
         
@@ -60,11 +60,11 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             }
         }
 
-	stage ("Test Library")
-	{
-	    docker.image.inside(docker.runArgs)
-	    {
-	    // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
+    stage ("Test Library")
+    {
+        docker.image.inside(docker.runArgs)
+        {
+        // Cap the maximum amount of testing to be a few hours; assume failure if the time limit is hit
             timeout(time: 4, unit: 'HOURS')
             {
                 
@@ -74,8 +74,8 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 cd ${libTest.testDirectory}
                 LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
             """
-		    
-	    }
+            
+        }
         }
     }
 
@@ -85,47 +85,44 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             docker.image.inside(docker.runArgs)
             {
-            withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
-            {
-                String docker_context = "${compiler_args.build_config}/${compiler_args.compiler_name}"
-                if( compiler_args.compiler_name.toLowerCase( ).startsWith( 'hcc-' ) )
+                withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
                 {
-                    sh  """#!/usr/bin/env bash
-                        set -x
-                        cd ${paths.project_build_prefix}/build/release
-                        make package
-                      """
+                    String docker_context = "${compiler_args.build_config}/${compiler_args.compiler_name}"
+                    if( compiler_args.compiler_name.toLowerCase( ).startsWith( 'hcc-' ) )
+                    {
+                        sh  """#!/usr/bin/env bash
+                            set -x
+                            cd ${paths.project_build_prefix}/build/release
+                            make package
+                          """
 
-                    if( paths.project_name.equalsIgnoreCase( 'rocblas-ubuntu' ) )
-                    {
-                      sh  """#!/usr/bin/env bash
-                          set -x
-                          rm -rf ${docker_context} && mkdir -p ${docker_context}
-                          mv ${paths.project_build_prefix}/build/release/*.deb ${docker_context}
-                          dpkg -c ${docker_context}/*.deb
-                      """
-                      archiveArtifacts artifacts: "${docker_context}/*.deb", fingerprint: true
-                    }
-                    else if( paths.project_name.equalsIgnoreCase( 'rocblas-fedora' ) )
-                    {
-                      sh  """#!/usr/bin/env bash
-                          set -x
-                          rm -rf ${docker_context} && mkdir -p ${docker_context}
-                          mv ${paths.project_build_prefix}/build/release/*.rpm ${docker_context}
-                          rpm -qlp ${docker_context}/*.rpm
-                      """
-                      archiveArtifacts artifacts: "${docker_context}/*.rpm", fingerprint: true
+                        if( paths.project_name.equalsIgnoreCase( 'rocblas-ubuntu' ) )
+                        {
+                          sh  """#!/usr/bin/env bash
+                              set -x
+                              rm -rf ${docker_context} && mkdir -p ${docker_context}
+                              mv ${paths.project_build_prefix}/build/release/*.deb ${docker_context}
+                              dpkg -c ${docker_context}/*.deb
+                          """
+                          archiveArtifacts artifacts: "${docker_context}/*.deb", fingerprint: true
+                        }
+                        else if( paths.project_name.equalsIgnoreCase( 'rocblas-fedora' ) )
+                        {
+                          sh  """#!/usr/bin/env bash
+                              set -x
+                              rm -rf ${docker_context} && mkdir -p ${docker_context}
+                              mv ${paths.project_build_prefix}/build/release/*.rpm ${docker_context}
+                              rpm -qlp ${docker_context}/*.rpm
+                          """
+                          archiveArtifacts artifacts: "${docker_context}/*.rpm", fingerprint: true
+                        }
                     }
                 }
-
             }
         }
+    body()
     }
-
-	
-    } 
-	body()
 }
-    
+
 
 
