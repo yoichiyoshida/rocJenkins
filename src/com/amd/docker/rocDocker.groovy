@@ -47,7 +47,7 @@ class rocDocker implements Serializable
 
     void runCommand(def stage, def command)
     {
-	image.inside(runArg)
+	image.inside(runArgs)
 	{
 	    stage.sh(command)
 	}
