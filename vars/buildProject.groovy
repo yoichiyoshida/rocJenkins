@@ -7,8 +7,11 @@ import com.amd.docker.rocDocker
 
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {
-    node ( nodeLogic )
+pipeline{
+    agent { label nodeLogic }
+    //node ( nodeLogic )
     {
+    stages{
         echo "Starting Jenkins Job"
 
         stage ("Checkout source code")
@@ -121,5 +124,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             }
         }
     }
+    }   
 }
 
+}
