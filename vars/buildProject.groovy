@@ -11,8 +11,8 @@ pipeline{
     agent {node { label "rocm20" }}
     //node ( nodeLogic )
     
-        stage{
-            stages ("Checkout source code")
+        stages{
+            stage ("Checkout source code")
             {
                 steps {
                     echo "Hello"
