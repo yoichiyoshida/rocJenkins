@@ -15,7 +15,7 @@ pipeline{
     {
         stage ("Vega 20")
         {
-             node { label "rocm20" }
+             agent {node { label "rocm20" } }
         }
         stages
         {
