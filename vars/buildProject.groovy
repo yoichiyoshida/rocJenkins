@@ -13,37 +13,45 @@ pipeline{
     
     stages
     {
-        stage ("Vega 20")
+        stage ("Building on gfx 900 and 906")
         {
-             agent {node { label "rocm20" } }
-        }
-        stages
-        {
-            stage ("Checkout source code")
+            parallel 
             {
-                steps 
+                stage ("gfx900")
                 {
-                    script
+                    agent 
                     {
-                        build.checkout(paths)
+                        label "rocm20" 
                     }
                 }
-            }
-            
-            stage ("Build Docker Container")
-            {
-                steps 
+                stages
                 {
-                    script
+                    stage ("Checkout source code")
                     {
-                        docker.buildImage(this)
+                        steps 
+                        {
+                            script
+                            {
+                                build.checkout(paths)
+                            }
+                        }
                     }
-                }
-            }
-        }
                     
+                    stage ("Build Docker Container")
+                    {
+                        steps 
+                        {
+                            script
+                            {
+                                docker.buildImage(this)
+                            }
+                        }
+                    }
+                }
+            }
+                    
+        }
     }
-    
         
 /*     stages{
         
@@ -158,6 +166,6 @@ pipeline{
         }
     } */
        
-}
+
 
 }
