@@ -16,47 +16,44 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Building on gfx 900 and 906")
             {
-                steps 
+                parallel 
                 {
-                    parallel 
+                    stage ("gfx900")
                     {
-                        stage ("gfx900")
+                        steps 
                         {
-                            step 
+                            agent 
                             {
-                                agent 
-                                {
-                                    label "rocm20" 
-                                }
+                                label "rocm20" 
+                            }
 
-                                stages
+                            stages
+                            {
+                                stage ("Checkout source code")
                                 {
-                                    stage ("Checkout source code")
+                                    steps 
                                     {
-                                        steps 
+                                        script
                                         {
-                                            script
-                                            {
-                                                build.checkout(paths)
-                                            }
+                                            build.checkout(paths)
                                         }
                                     }
-                                    
-                                    stage ("Build Docker Container")
+                                }
+                                
+                                stage ("Build Docker Container")
+                                {
+                                    steps 
                                     {
-                                        steps 
+                                        script
                                         {
-                                            script
-                                            {
-                                                docker.buildImage(this)
-                                            }
+                                            docker.buildImage(this)
                                         }
                                     }
                                 }
                             }
-                        }                  
-                    }
-                }        
+                        }
+                    }                  
+                }
             }
         }
     }
