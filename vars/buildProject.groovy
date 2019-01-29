@@ -10,8 +10,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
      pipeline
     {
         agent none
-        //node ( nodeLogic )
-        
+
         stages
         {
             stage ("Checkout source code")
@@ -23,20 +22,6 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         agent 
                         {
                             label "gfx900" 
-                        }
-                        steps
-                        {
-                            script
-                            {
-                                build.checkout(paths)
-                            }
-                        }
-                    }
-                    stage ("gfx906")
-                    {
-                        agent 
-                        {
-                            label "rocm20" 
                         }
                         steps
                         {
@@ -65,21 +50,34 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                docker.buildImage(this)
                             }
                         }
-                    }                  
-                    stage ("gfx906")
+                    }                   
+                }
+            }
+            stage ("Compile Library")
+            {
+                parallel 
+                {
+                    stage ("gfx900")
                     {
                         agent 
                         {
-                            label "rocm20" 
+                            label "gfx900" 
                         }
                         steps
                         {
                             script
                             {
-                                docker.buildImage(this)
+                                paths.construct_build_prefix()
+                                def command = """#!/usr/bin/env bash
+                                          set -x
+                                          cd ${paths.project_build_prefix}
+                                          LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
+                                        """
+                                        
+                                docker.runCommand(this, command)
                             }
                         }
-                    } 
+                    }                   
                 }
             }            
         }
@@ -121,15 +119,21 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         stage ("Compile Library")
         {
             paths.construct_build_prefix()
+            def command = """#!/usr/bin/env bash
+                      set -x
+                      cd ${paths.project_build_prefix}
+                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
+                    """
+                    
+            docker.runCommand(this, command)
+            
             docker.image.inside(docker.runArgs)
             {
-                withEnv(["CXX=${compiler_args.compiler_path}", 'CLICOLOR_FORCE=1'])
-                {
                   // Build library & clients
                   sh  """#!/usr/bin/env bash
                       set -x
                       cd ${paths.project_build_prefix}
-                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${paths.build_command}
+                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
                     """
                 }
             }
