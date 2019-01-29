@@ -36,7 +36,49 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             }
                         }
                     }                  
+                    stage ("gfx906")
+                    {
+                        steps 
+                        {
+                            agent 
+                            {
+                                label "gfx906" 
+                            }
+
+                            steps
+                            {
+                                script
+                                {
+                                    build.checkout(paths)
+                                }
+                            }
+                        }
+                    } 
+                }
+            }
+            stage ("Build Docker Container")
+            {
+                parallel 
+                {
                     stage ("gfx900")
+                    {
+                        steps 
+                        {
+                            agent 
+                            {
+                                label "gfx900" 
+                            }
+
+                            steps
+                            {
+                                script
+                                {
+                                   docker.buildImage(this)
+                                }
+                            }
+                        }
+                    }                  
+                    stage ("gfx906")
                     {
                         steps 
                         {
@@ -55,7 +97,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         }
                     } 
                 }
-            }
+            }            
         }
     } 
         
