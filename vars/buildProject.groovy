@@ -29,8 +29,6 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 
                             stages
                             {
-                                steps 
-                                {
                                     stage ("Checkout source code")
                                     {
                                         steps 
@@ -52,7 +50,6 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                             }
                                         }
                                     }
-                                }
                             }
                         }
                     }                  
