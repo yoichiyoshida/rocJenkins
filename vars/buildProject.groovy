@@ -12,9 +12,11 @@ pipeline{
     //node ( nodeLogic )
     
         stage{
-            stage ("Checkout source code")
+            stages ("Checkout source code")
             {
-                echo "Hello"
+                steps {
+                    echo "Hello"
+                }
             }
         }
         
