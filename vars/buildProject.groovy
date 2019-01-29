@@ -7,67 +7,14 @@ import com.amd.docker.rocDocker
 
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {
-    
-    pipeline {
-    agent none
-
-    stages {
-        stage("build and deploy on Windows and Linux") {
-            parallel {
-                stage("windows") {
-                    agent {
-                        label "gfx906"
-                    }
-                    stages {
-                        stage("build") {
-                            steps {
-                                bat "run-build.bat"
-                            }
-                        }
-                        stage("deploy") {
-                            when {
-                                branch "master"
-                            }
-                            steps {
-                                bat "run-deploy.bat"
-                            }
-                        }
-                    }
-                }
-
-                stage("linux") {
-                    agent {
-                        label "gfx900"
-                    }
-                    stages {
-                        stage("build") {
-                            steps {
-                                sh "./run-build.sh"
-                            }
-                        }
-                        stage("deploy") {
-                             when {
-                                 branch "master"
-                             }
-                             steps {
-                                sh "./run-deploy.sh"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-/*     pipeline
+     pipeline
     {
         agent none
         //node ( nodeLogic )
         
         stages
         {
-            stage ("Building on gfx 900 and 906")
+            stage ("Checkout source code")
             {
                 parallel 
                 {
@@ -77,39 +24,40 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             agent 
                             {
-                                label "rocm20" 
+                                label "gfx900" 
                             }
 
-                            stages
+                            steps
                             {
-                                    stage ("Checkout source code")
-                                    {
-                                        steps 
-                                        {
-                                            script
-                                            {
-                                                build.checkout(paths)
-                                            }
-                                        }
-                                    }
-                                    
-                                    stage ("Build Docker Container")
-                                    {
-                                        steps 
-                                        {
-                                            script
-                                            {
-                                                docker.buildImage(this)
-                                            }
-                                        }
-                                    }
+                                script
+                                {
+                                    build.checkout(paths)
+                                }
                             }
                         }
                     }                  
+                    stage ("gfx900")
+                    {
+                        steps 
+                        {
+                            agent 
+                            {
+                                label "gfx906" 
+                            }
+
+                            steps
+                            {
+                                script
+                                {
+                                    docker.buildImage(this)
+                                }
+                            }
+                        }
+                    } 
                 }
             }
         }
-    } */
+    } 
         
 /*     stages{
         
