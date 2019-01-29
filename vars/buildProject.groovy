@@ -21,7 +21,7 @@ pipeline{
             }
         }
         
-        stage ("Checkout source code")
+        stage ("Build Docker Container")
         {
             steps 
             {
