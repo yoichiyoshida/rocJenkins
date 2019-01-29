@@ -11,7 +11,15 @@ pipeline{
     agent any
     //node ( nodeLogic )
     {
-    stages{
+        stage{
+            stage ("Checkout source code")
+            {
+                echo "Hello"
+            }
+        }
+        
+        
+/*     stages{
         
         stage ("Checkout source code")
         {
@@ -122,7 +130,7 @@ pipeline{
                 }
             }
         }
-    }
+    } */
     }   
 }
 
