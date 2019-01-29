@@ -8,13 +8,14 @@ import com.amd.docker.rocDocker
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {
 pipeline{
-    agent {node { label "rocm20" }}
+    agent none
     //node ( nodeLogic )
     
     stages
     {
         stage ("Vega 20")
         {
+             {node { label "rocm20" }}
         }
         stages
         {
