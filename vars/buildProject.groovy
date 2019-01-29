@@ -32,11 +32,11 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             }
                         }
                     }
-                    stage ("rocm20")
+                    stage ("gfx906")
                     {
                         agent 
                         {
-                            label "gfx906" 
+                            label "rocm20" 
                         }
                         steps
                         {
