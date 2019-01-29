@@ -24,7 +24,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             label "rocm20" 
                         }
-                    
+
                         stages
                         {
                             stage ("Checkout source code")
@@ -50,6 +50,38 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             }
                         }
                     }
+                    stage ("gfx906")
+                    {
+                        agent 
+                        {
+                            label "rocm20" 
+                        }
+
+                        stages
+                        {
+                            stage ("Checkout source code")
+                            {
+                                steps 
+                                {
+                                    script
+                                    {
+                                        build.checkout(paths)
+                                    }
+                                }
+                            }
+                            
+                            stage ("Build Docker Container")
+                            {
+                                steps 
+                                {
+                                    script
+                                    {
+                                        docker.buildImage(this)
+                                    }
+                                }
+                            }
+                        }
+                    }                    
                 }
                         
             }
