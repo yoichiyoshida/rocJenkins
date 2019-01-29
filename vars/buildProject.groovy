@@ -79,6 +79,35 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         }
                     }                   
                 }
+            }
+            stage ("Test Library")
+            {
+                parallel 
+                {
+                    stage ("gfx900")
+                    {
+                        agent 
+                        {
+                            label "gfx900" 
+                        }
+                        steps
+                        {
+                            script
+                            {
+                                def command = """#!/usr/bin/env bash
+                                                    set -x
+                                                    cd ${paths.project_build_prefix}
+                                                    cd ${libTest.testDirectory}
+                                                    LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
+                                              """
+                                timeout(time: 4, unit: 'HOURS')
+                                {                                
+                                    docker.runCommand(this, command)
+                                }
+                            }
+                        }
+                    }                   
+                }
             }            
         }
     } 
