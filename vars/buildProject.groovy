@@ -24,27 +24,28 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             label "rocm20" 
                         }
-                    }
-                    stages
-                    {
-                        stage ("Checkout source code")
+                    
+                        stages
                         {
-                            steps 
+                            stage ("Checkout source code")
                             {
-                                script
+                                steps 
                                 {
-                                    build.checkout(paths)
+                                    script
+                                    {
+                                        build.checkout(paths)
+                                    }
                                 }
                             }
-                        }
-                        
-                        stage ("Build Docker Container")
-                        {
-                            steps 
+                            
+                            stage ("Build Docker Container")
                             {
-                                script
+                                steps 
                                 {
-                                    docker.buildImage(this)
+                                    script
+                                    {
+                                        docker.buildImage(this)
+                                    }
                                 }
                             }
                         }
