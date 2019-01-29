@@ -7,7 +7,60 @@ import com.amd.docker.rocDocker
 
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {
-    pipeline
+    
+    pipeline {
+    agent none
+
+    stages {
+        stage("build and deploy on Windows and Linux") {
+            parallel {
+                stage("windows") {
+                    agent {
+                        label "gfx906"
+                    }
+                    stages {
+                        stage("build") {
+                            steps {
+                                bat "run-build.bat"
+                            }
+                        }
+                        stage("deploy") {
+                            when {
+                                branch "master"
+                            }
+                            steps {
+                                bat "run-deploy.bat"
+                            }
+                        }
+                    }
+                }
+
+                stage("linux") {
+                    agent {
+                        label "gfx900"
+                    }
+                    stages {
+                        stage("build") {
+                            steps {
+                                sh "./run-build.sh"
+                            }
+                        }
+                        stage("deploy") {
+                             when {
+                                 branch "master"
+                             }
+                             steps {
+                                sh "./run-deploy.sh"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*     pipeline
     {
         agent none
         //node ( nodeLogic )
@@ -56,7 +109,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 }
             }
         }
-    }
+    } */
         
 /*     stages{
         
