@@ -16,74 +16,76 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Building on gfx 900 and 906")
             {
-                parallel 
+                steps 
                 {
-                    stage ("gfx900")
+                    parallel 
                     {
-                        agent 
+                        stage ("gfx900")
                         {
-                            label "rocm20" 
-                        }
+                            agent 
+                            {
+                                label "rocm20" 
+                            }
 
-                        stages
-                        {
-                            stage ("Checkout source code")
+                            stages
                             {
-                                steps 
+                                stage ("Checkout source code")
                                 {
-                                    script
+                                    steps 
                                     {
-                                        build.checkout(paths)
+                                        script
+                                        {
+                                            build.checkout(paths)
+                                        }
                                     }
                                 }
-                            }
-                            
-                            stage ("Build Docker Container")
-                            {
-                                steps 
+                                
+                                stage ("Build Docker Container")
                                 {
-                                    script
+                                    steps 
                                     {
-                                        docker.buildImage(this)
+                                        script
+                                        {
+                                            docker.buildImage(this)
+                                        }
                                     }
                                 }
                             }
                         }
+                        stage ("gfx906")
+                        {
+                            agent 
+                            {
+                                label "rocm20" 
+                            }
+
+                            stages
+                            {
+                                stage ("Checkout source code")
+                                {
+                                    steps 
+                                    {
+                                        script
+                                        {
+                                            build.checkout(paths)
+                                        }
+                                    }
+                                }
+                                
+                                stage ("Build Docker Container")
+                                {
+                                    steps 
+                                    {
+                                        script
+                                        {
+                                            docker.buildImage(this)
+                                        }
+                                    }
+                                }
+                            }
+                        }                    
                     }
-                    stage ("gfx906")
-                    {
-                        agent 
-                        {
-                            label "rocm20" 
-                        }
-
-                        stages
-                        {
-                            stage ("Checkout source code")
-                            {
-                                steps 
-                                {
-                                    script
-                                    {
-                                        build.checkout(paths)
-                                    }
-                                }
-                            }
-                            
-                            stage ("Build Docker Container")
-                            {
-                                steps 
-                                {
-                                    script
-                                    {
-                                        docker.buildImage(this)
-                                    }
-                                }
-                            }
-                        }
-                    }                    
-                }
-                        
+                }        
             }
         }
     }
