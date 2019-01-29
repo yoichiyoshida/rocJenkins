@@ -13,24 +13,30 @@ pipeline{
     
     stages
     {
-        stage ("Checkout source code")
+        stage ("Vega 20")
         {
-            steps 
+            stage ("Checkout source code")
             {
-                echo "Hello"
-            }
-        }
-        
-        stage ("Build Docker Container")
-        {
-            steps 
-            {
-                script
+                steps 
                 {
-                    build.checkout(paths)
+                    script
+                    {
+                        build.checkout(paths)
+                    }
                 }
             }
-        }        
+            
+            stage ("Build Docker Container")
+            {
+                steps 
+                {
+                    script
+                    {
+                        docker.buildImage(this)
+                    }
+                }
+            }
+        }            
     }
     
         
