@@ -24,7 +24,6 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             label "gfx900" 
                         }
-
                         steps
                         {
                             script
@@ -33,13 +32,12 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             }
                         }
                     }
-                    stage ("gfx906")
+                    stage ("rocm20")
                     {
                         agent 
                         {
                             label "gfx906" 
                         }
-
                         steps
                         {
                             script
@@ -60,7 +58,6 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             label "gfx900" 
                         }
-
                         steps
                         {
                             script
@@ -73,9 +70,8 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                     {
                         agent 
                         {
-                            label "gfx906" 
+                            label "rocm20" 
                         }
-
                         steps
                         {
                             script
