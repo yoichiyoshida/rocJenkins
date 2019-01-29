@@ -12,8 +12,7 @@ pipeline{
     //node ( nodeLogic )
     {
     stages{
-        echo "Starting Jenkins Job"
-
+        
         stage ("Checkout source code")
         {
             build.checkout(paths)
