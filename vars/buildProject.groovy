@@ -10,7 +10,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 pipeline{
     agent any
     //node ( nodeLogic )
-    {
+    
         stage{
             stage ("Checkout source code")
             {
@@ -131,7 +131,7 @@ pipeline{
             }
         }
     } */
-    }   
+       
 }
 
 }
