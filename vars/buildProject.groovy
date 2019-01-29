@@ -8,7 +8,7 @@ import com.amd.docker.rocDocker
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {
 pipeline{
-    agent { label nodeLogic }
+    agent { node {label nodeLogic} }
     //node ( nodeLogic )
     {
     stages{
