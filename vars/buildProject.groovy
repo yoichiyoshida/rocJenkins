@@ -11,7 +11,8 @@ pipeline{
     agent {node { label "rocm20" }}
     //node ( nodeLogic )
     
-    stages{
+    stages
+    {
         stage ("Checkout source code")
         {
             steps 
@@ -24,7 +25,10 @@ pipeline{
         {
             steps 
             {
-            build.checkout(paths)
+                script
+                {
+                    build.checkout(paths)
+                }
             }
         }        
     }
