@@ -7,49 +7,51 @@ import com.amd.docker.rocDocker
 
 def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
 {
-pipeline{
-    agent none
-    //node ( nodeLogic )
-    
-    stages
+    pipeline
     {
-        stage ("Building on gfx 900 and 906")
+        agent none
+        //node ( nodeLogic )
+        
+        stages
         {
-            parallel 
+            stage ("Building on gfx 900 and 906")
             {
-                stage ("gfx900")
+                parallel 
                 {
-                    agent 
+                    stage ("gfx900")
                     {
-                        label "rocm20" 
-                    }
-                }
-                stages
-                {
-                    stage ("Checkout source code")
-                    {
-                        steps 
+                        agent 
                         {
-                            script
+                            label "rocm20" 
+                        }
+                    }
+                    stages
+                    {
+                        stage ("Checkout source code")
+                        {
+                            steps 
                             {
-                                build.checkout(paths)
+                                script
+                                {
+                                    build.checkout(paths)
+                                }
+                            }
+                        }
+                        
+                        stage ("Build Docker Container")
+                        {
+                            steps 
+                            {
+                                script
+                                {
+                                    docker.buildImage(this)
+                                }
                             }
                         }
                     }
-                    
-                    stage ("Build Docker Container")
-                    {
-                        steps 
-                        {
-                            script
-                            {
-                                docker.buildImage(this)
-                            }
-                        }
-                    }
                 }
+                        
             }
-                    
         }
     }
         
@@ -167,5 +169,5 @@ pipeline{
     } */
        
 
-
+    
 }
