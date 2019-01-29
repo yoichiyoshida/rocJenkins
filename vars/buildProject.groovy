@@ -20,37 +20,31 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 {
                     stage ("gfx900")
                     {
-                        steps 
+                        agent 
                         {
-                            agent 
-                            {
-                                label "gfx900" 
-                            }
+                            label "gfx900" 
+                        }
 
-                            steps
+                        steps
+                        {
+                            script
                             {
-                                script
-                                {
-                                    build.checkout(paths)
-                                }
+                                build.checkout(paths)
                             }
                         }
-                    }                  
+                    }
                     stage ("gfx906")
                     {
-                        steps 
+                        agent 
                         {
-                            agent 
-                            {
-                                label "gfx906" 
-                            }
+                            label "gfx906" 
+                        }
 
-                            steps
+                        steps
+                        {
+                            script
                             {
-                                script
-                                {
-                                    build.checkout(paths)
-                                }
+                                build.checkout(paths)
                             }
                         }
                     } 
@@ -62,37 +56,31 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 {
                     stage ("gfx900")
                     {
-                        steps 
+                        agent 
                         {
-                            agent 
-                            {
-                                label "gfx900" 
-                            }
+                            label "gfx900" 
+                        }
 
-                            steps
+                        steps
+                        {
+                            script
                             {
-                                script
-                                {
-                                   docker.buildImage(this)
-                                }
+                               docker.buildImage(this)
                             }
                         }
                     }                  
                     stage ("gfx906")
                     {
-                        steps 
+                        agent 
                         {
-                            agent 
-                            {
-                                label "gfx906" 
-                            }
+                            label "gfx906" 
+                        }
 
-                            steps
+                        steps
+                        {
+                            script
                             {
-                                script
-                                {
-                                    docker.buildImage(this)
-                                }
+                                docker.buildImage(this)
                             }
                         }
                     } 
