@@ -17,7 +17,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             {
                 parallel 
                 {
-                    stage ("gfx900")
+                    stage ("gfx906")
                     {
                         agent 
                         {
@@ -35,21 +35,49 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             }
             stage ("Build Docker Container")
             {
-                parallel 
-                {
-                    stage ("gfx900")
-                    {
-                        agent 
+                step {
+                    script {
+                        def platforms =[:]
+                        for (i=0; i < 1;i++)
                         {
-                            label "gfx900" 
-                        }
-                        steps
-                        {
-                            script
+                            platforms[i] = 
                             {
-                               dockerArray[0].buildImage(this)
+                                stage ("gfx900")
+                                {
+                                    agent 
+                                    {
+                                        label "gfx900" 
+                                    }
+                                    steps
+                                    {
+                                        script
+                                        {
+                                           dockerArray[i].buildImage(this)
+                                        }
+                                    }
+                                }
                             }
                         }
+                        parallel platforms
+/*                         {
+                            for (docker in dockerArray)
+                            {
+                                stage ("gfx900")
+                                {
+                                    agent 
+                                    {
+                                        label "gfx900" 
+                                    }
+                                    steps
+                                    {
+                                        script
+                                        {
+                                           docker.buildImage(this)
+                                        }
+                                    }
+                                }
+                            }
+                        } */
                     }
                 }
             }
