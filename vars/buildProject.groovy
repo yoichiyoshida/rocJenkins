@@ -5,7 +5,7 @@
 import com.amd.project.*
 import com.amd.docker.rocDocker
 
-def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, rocDocker docker, compiler_data compiler_args, rocTests libTest, Closure body)
+def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, rocTests libTest, Closure body)
 {
      pipeline
     {
@@ -37,23 +37,27 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             {
                 parallel 
                 {
-                    stage ("gfx900")
+                    for (docker in dockerArray)
                     {
-                        agent 
+                        stage ("gfx900")
                         {
-                            label "gfx900" 
-                        }
-                        steps
-                        {
-                            script
+                            agent 
                             {
-                               docker.buildImage(this)
+                                label "gfx900" 
+                            }
+                            steps
+                            {
+                                script
+                                {
+                                   docker.buildImage(this)
+                                }
                             }
                         }
-                    }                   
+                    }
                 }
             }
-            stage ("Compile Library")
+        }
+/*             stage ("Compile Library")
             {
                 parallel 
                 {
@@ -108,9 +112,39 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         }
                     }                   
                 }
-            }            
+            }
+            stage ("Build Package")
+                {
+                    parallel 
+                    {
+                        stage ("gfx900")
+                        {
+                            agent 
+                            {
+                                label "gfx900" 
+                            }
+                            steps
+                            {
+                                script
+                                {
+                                    String docker_context = "${compiler_args.build_config}/${compiler_args.compiler_name}"
+                                    def command = """#!/usr/bin/env bash
+                                                        set -x
+                                                        cd ${paths.project_build_prefix}
+                                                        cd ${libTest.testDirectory}
+                                                        LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
+                                                  """
+                                    timeout(time: 4, unit: 'HOURS')
+                                    {                                
+                                        docker.runCommand(this, command)
+                                    }
+                                }
+                            }
+                        }                   
+                    }
+                }            
         }
-    } 
+    }  */
         
 /*     stages{
         
