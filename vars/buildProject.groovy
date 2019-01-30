@@ -44,7 +44,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             {
                                 stage ("gfx900")
                                 {
-                                    agent 
+                                    node 
                                     {
                                         label "gfx900" 
                                     }
@@ -58,7 +58,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 }
                             }
                         }
-                    }
+                    
                         parallel platforms
 /*                         {
                             for (docker in dockerArray)
