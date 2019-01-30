@@ -51,6 +51,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                     {
                                         script
                                         {
+                                           echo "Hello"
                                            dockerArray[i].buildImage(this)
                                         }
                                     }
