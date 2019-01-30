@@ -48,7 +48,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 {
                                     node 
                                     {
-                                        label "gfx900" 
+                                        label "gfx900 && rocm20" 
                                     }
                                     steps
                                     {
