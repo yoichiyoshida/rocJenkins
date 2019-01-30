@@ -58,6 +58,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 }
                             }
                         }
+                    }
                         parallel platforms
 /*                         {
                             for (docker in dockerArray)
@@ -78,7 +79,6 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 }
                             }
                         } */
-                    }
                 }
             }
         }
