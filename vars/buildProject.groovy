@@ -37,20 +37,17 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             {
                 parallel 
                 {
-                    for (docker in dockerArray)
+                    stage ("gfx900")
                     {
-                        stage ("gfx900")
+                        agent 
                         {
-                            agent 
+                            label "gfx900" 
+                        }
+                        steps
+                        {
+                            script
                             {
-                                label "gfx900" 
-                            }
-                            steps
-                            {
-                                script
-                                {
-                                   docker.buildImage(this)
-                                }
+                               dockerArray[0].buildImage(this)
                             }
                         }
                     }
