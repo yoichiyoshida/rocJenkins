@@ -49,20 +49,20 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             {
                                 //node ("gfx900 && rocm20" )
                                 //{
-                                    stage ("gfx900")
+                                    node ("gfx900")
                                     {
-                                        node("rocm20") 
+                                        stage ("rocm20") 
                                         {
                                             echo "Test"
                                         }
-                                        step
+                                        /*step
                                         {
                                             script
                                             {
                                                echo "Hello"
                                                //dockerArray[i].buildImage(this)
                                             }
-                                        }
+                                        }*/
                                     }
                             //    }
                             }
