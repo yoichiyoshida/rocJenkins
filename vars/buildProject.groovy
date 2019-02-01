@@ -14,9 +14,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
     {
         //agent none
 
-/*         stages
+         stages
         {
-            stage ("Checkout source code")
+/*            stage ("Checkout source code")
             {
                 parallel 
                 {
