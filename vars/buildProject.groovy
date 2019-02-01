@@ -49,20 +49,18 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             platforms[platform.jenkinsLabel] = platform
                         }
                         
-                        action =
+                        def action =
                         { key ->
                             platform = platforms[key]
-                            
+
+                            final test = "${platform.jenkinsLabel}"
+                            node (platform.jenkinsLabel)
                             {
-                                final test = "${platform.jenkinsLabel}"
-                                node (platform.jenkinsLabel)
+                                stage ("${platform.jenkinsLabel}") 
                                 {
-                                    stage ("${platform.jenkinsLabel}") 
-                                    {
-                                        echo "Test " +  "${platform.jenkinsLabel}" + test
-                                        build.checkout(paths)
-                                        platform.buildImage(this)
-                                    }
+                                    echo "Test " +  "${platform.jenkinsLabel}" + test
+                                    build.checkout(paths)
+                                    platform.buildImage(this)
                                 }
                             }
                         //    }
@@ -72,7 +70,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         actions = [:]
                         for (platform in platforms)
                         {
-                            actions[platform.key] = action(platform.key)
+                            actions[platform.key] = action.curry(platform.key)
                         }
                         
                         parallel actions
