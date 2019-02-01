@@ -44,19 +44,19 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                     {
                         def platforms =[:]
                         //for (i = 0; i < 1; i++)
-                        for (it in platforms)
+                        for (platform in platforms)
                         {
-                            platforms[it.jenkinsLabel] = 
+                            platforms[platform.jenkinsLabel] = 
                             {
                                 //node ("gfx900 && rocm20" )
                                 //{
-                                    node (it.jenkinsLabel)
+                                    node (platform.jenkinsLabel)
                                     {
-                                        stage (it.jenkinsLabel) 
+                                        stage (platform.jenkinsLabel) 
                                         {
-                                            echo "Test ${it.jenkinsLabel}"
+                                            echo "Test ${platform.jenkinsLabel}"
                                             build.checkout(paths)
-                                            it.buildImage(this)
+                                            platform.buildImage(this)
                                         }
                                         /*step
                                         {
