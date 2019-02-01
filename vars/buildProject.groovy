@@ -54,6 +54,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                         stage ("rocm20") 
                                         {
                                             echo "Test"
+                                            build.checkout(paths)
                                         }
                                         /*step
                                         {
