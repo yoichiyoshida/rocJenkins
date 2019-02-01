@@ -48,7 +48,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 //{
                                     stage ("gfx900")
                                     {
-                                        agent 
+                                        node 
                                         {
                                             label "jenkins-rocm-6" 
                                         }
