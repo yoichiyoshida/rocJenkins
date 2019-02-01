@@ -48,9 +48,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 //{
                                     stage ("gfx900")
                                     {
-                                        node 
+                                        node("rocm20") 
                                         {
-                                            label "rocm20" 
+                                            echo "Test"
                                         }
                                         step
                                         {
