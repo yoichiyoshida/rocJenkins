@@ -46,8 +46,12 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 
                         for (platform in dockerArray)
                         {
-                            platforms["${platform.jenkinsLabel}"] = 
-                            {
+                            platforms[platform.jenkinsLabel] = platform
+                        }
+                        
+                        action =
+                            { key ->
+                                platform = platforms[key]
                                 final test = "${platform.jenkinsLabel}"
                                 node (platform.jenkinsLabel)
                                 {
@@ -61,7 +65,14 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             //    }
                             }
                         }
-                        parallel platforms
+                        
+                        actions = [:]
+                        for (platform in platforms)
+                        {
+                            actions[platform.key] = action
+                        }
+                        
+                        parallel actions
 /*                         {
                             for (docker in dockerArray)
                             {
