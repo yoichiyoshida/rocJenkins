@@ -48,11 +48,12 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             platforms["${platform.jenkinsLabel}"] = 
                             {
+                                final test = "${platform.jenkinsLabel}"
                                 node ("${platform.jenkinsLabel}")
                                 {
                                     stage ("${platform.jenkinsLabel}") 
                                     {
-                                        echo "Test " +  platform.jenkinsLabel.toString()
+                                        echo "Test " +  "${platform.jenkinsLabel}" + test
                                         build.checkout(paths)
                                         platform.buildImage(this)
                                     }
