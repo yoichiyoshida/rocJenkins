@@ -50,21 +50,21 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         }
                         
                         action =
-                            { key ->
-                                platform = platforms[key]
-                                final test = "${platform.jenkinsLabel}"
-                                node (platform.jenkinsLabel)
+                        { key ->
+                            platform = platforms[key]
+                            final test = "${platform.jenkinsLabel}"
+                            node (platform.jenkinsLabel)
+                            {
+                                stage ("${platform.jenkinsLabel}") 
                                 {
-                                    stage ("${platform.jenkinsLabel}") 
-                                    {
-                                        echo "Test " +  "${platform.jenkinsLabel}" + test
-                                        build.checkout(paths)
-                                        platform.buildImage(this)
-                                    }
+                                    echo "Test " +  "${platform.jenkinsLabel}" + test
+                                    build.checkout(paths)
+                                    platform.buildImage(this)
                                 }
-                            //    }
                             }
+                        //    }
                         }
+
                         
                         actions = [:]
                         for (platform in platforms)
