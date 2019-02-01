@@ -55,6 +55,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                         {
                                             echo "Test"
                                             build.checkout(paths)
+                                            dockerArray[i].buildImage(this)
                                         }
                                         /*step
                                         {
