@@ -48,9 +48,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             platforms["${platform.jenkinsLabel}"] = 
                             {
-                                node (platform.jenkinsLabel)
+                                node ("${platform.jenkinsLabel}")
                                 {
-                                    stage (platform.jenkinsLabel) 
+                                    stage ("${platform.jenkinsLabel}") 
                                     {
                                         echo "Test " +  platform.jenkinsLabel.toString()
                                         build.checkout(paths)
