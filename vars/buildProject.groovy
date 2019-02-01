@@ -53,7 +53,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                     {
                                         stage ("rocm20") 
                                         {
-                                            echo "Test"
+                                            echo "Test ${i}"
                                             build.checkout(paths)
                                             dockerArray[i].buildImage(this)
                                         }
