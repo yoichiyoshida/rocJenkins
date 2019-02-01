@@ -44,7 +44,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                     {
                         def platforms =[:]
                         //for (i = 0; i < 1; i++)
-                        for (platform in platforms)
+                        for (platform in dockerArray)
                         {
                             platforms[platform.jenkinsLabel] = 
                             {
