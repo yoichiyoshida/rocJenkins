@@ -44,21 +44,24 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         {
                             platforms[i] = 
                             {
-                                node ("gfx900 && rocm20" )
-                                {
+                                //node ("gfx900 && rocm20" )
+                                //{
                                     stage ("gfx900")
                                     {
-                                    
-                                    step
-                                    {
-                                        script
+                                        agent 
                                         {
-                                           echo "Hello"
-                                           //dockerArray[i].buildImage(this)
+                                            label "jenkins-rocm-6" 
+                                        }
+                                        step
+                                        {
+                                            script
+                                            {
+                                               echo "Hello"
+                                               //dockerArray[i].buildImage(this)
+                                            }
                                         }
                                     }
-                                    }
-                                }
+                            //    }
                             }
                         }
                     
