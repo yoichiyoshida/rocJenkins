@@ -45,7 +45,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         def platforms =[:]
                         for (i = 0; i < 1; i++)
                         {
-                            platforms[i] = 
+                            platforms <<
                             {
                                 //node ("gfx900 && rocm20" )
                                 //{
