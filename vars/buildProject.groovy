@@ -12,7 +12,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 {
      pipeline
     {
-        //agent none
+        agent { label "master"}
 
          stages
         {
