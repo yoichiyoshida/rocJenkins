@@ -12,9 +12,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 {
      pipeline
     {
-        agent none
+        //agent none
 
-        stages
+/*         stages
         {
             stage ("Checkout source code")
             {
@@ -35,7 +35,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         }
                     } 
                 }
-            }
+            } */
             stage ("Build Docker Container")
             {
                 steps 
