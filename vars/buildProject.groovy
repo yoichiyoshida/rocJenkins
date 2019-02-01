@@ -49,7 +49,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                     stage ("gfx900")
                                     {
                                     
-                                    steps
+                                    step
                                     {
                                         script
                                         {

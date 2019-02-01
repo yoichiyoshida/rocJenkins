@@ -1,5 +1,5 @@
 /* ************************************************************************
- * Copyright 2018 Advanced Micro Devices, Inc.
+ * Copyright 2018-2019 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 import com.amd.project.project_paths;
 import java.nio.file.Path;
@@ -16,15 +16,15 @@ void checkout( project_paths paths )
 
     dir( paths.project_src_prefix )
     {
-	// checkout project
-	checkout([
-		$class: 'GitSCM',
-		branches: scm.branches,
-		doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-		extensions: scm.extensions + [[$class: 'CleanCheckout']],
-		userRemoteConfigs: scm.userRemoteConfigs
-	    ])
-        
-    paths.construct_build_prefix()    
+    // checkout project
+    checkout([
+        $class: 'GitSCM',
+        branches: scm.branches,
+        doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+        extensions: scm.extensions + [[$class: 'CleanCheckout']],
+        userRemoteConfigs: scm.userRemoteConfigs
+        ])
+
+    paths.construct_build_prefix()
     }
 }
