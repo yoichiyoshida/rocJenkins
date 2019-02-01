@@ -13,6 +13,8 @@ class rocDocker implements Serializable
     String runArgs
     String buildArgs
     String buildImageName
+    String jenkinsLabel
+    
     def insideClosure = """
           set -x
           /opt/rocm/bin/hcc --version
