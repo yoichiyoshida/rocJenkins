@@ -43,7 +43,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                     script 
                     {
                         def platforms =[:]
-                        for (i=0; i < 1;i++)
+                        for (i = 0; i < 1; i++)
                         {
                             platforms[i] = 
                             {
@@ -55,7 +55,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                         {
                                             echo "Test ${i}"
                                             build.checkout(paths)
-                                            dockerArray[i].buildImage(this)
+                                            dockerArray[0].buildImage(this)
                                         }
                                         /*step
                                         {
