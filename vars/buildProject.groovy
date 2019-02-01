@@ -50,7 +50,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                     {
                                         node 
                                         {
-                                            label "jenkins-rocm-6" 
+                                            label "rocm20" 
                                         }
                                         step
                                         {
