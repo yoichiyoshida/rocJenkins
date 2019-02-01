@@ -43,30 +43,20 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                     script 
                     {
                         def platforms =[:]
-                        //for (i = 0; i < 1; i++)
+
                         for (platform in dockerArray)
                         {
-                            platforms[platform.jenkinsLabel] = 
+                            platforms["${platform.jenkinsLabel}"] = 
                             {
-                                //node ("gfx900 && rocm20" )
-                                //{
-                                    node (platform.jenkinsLabel)
+                                node (platform.jenkinsLabel)
+                                {
+                                    stage (platform.jenkinsLabel) 
                                     {
-                                        stage (platform.jenkinsLabel) 
-                                        {
-                                            echo "Test " +  platform.jenkinsLabel.toString()
-                                            build.checkout(paths)
-                                            platform.buildImage(this)
-                                        }
-                                        /*step
-                                        {
-                                            script
-                                            {
-                                               echo "Hello"
-                                               //dockerArray[i].buildImage(this)
-                                            }
-                                        }*/
+                                        echo "Test " +  platform.jenkinsLabel.toString()
+                                        build.checkout(paths)
+                                        platform.buildImage(this)
                                     }
+                                }
                             //    }
                             }
                         }
