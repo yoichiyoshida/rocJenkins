@@ -37,6 +37,8 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             {
                 steps 
                 {
+                    script 
+                    {
                         def platforms =[:]
                         for (i=0; i < 1;i++)
                         {
@@ -82,6 +84,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                 }
                             }
                         } */
+                    }
                 }
             }
         }
