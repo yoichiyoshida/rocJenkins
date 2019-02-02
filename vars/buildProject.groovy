@@ -51,7 +51,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         
                         def action =
                         { key ->
-                            platform = platforms[key]
+                            def platform = platforms[key]
 
                             final test = "${platform.jenkinsLabel}"
                             node (platform.jenkinsLabel)
