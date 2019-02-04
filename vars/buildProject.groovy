@@ -42,7 +42,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 {
                     script 
                     {
-                        runParallelStage (paths, dockerArray, compiler_args, libTest) 
+                        runParallelStage(paths, dockerArray, compiler_args, libTest) 
                         {
                             build.checkout(paths)
                             platform.buildImage(this)

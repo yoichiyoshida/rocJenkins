@@ -2,6 +2,7 @@
  * Copyright 2018-2019 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 
+import com.amd.project.*
 import com.amd.docker.rocDocker
 
 
