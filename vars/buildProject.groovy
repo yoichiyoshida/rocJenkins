@@ -18,71 +18,52 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Build Docker Container")
             {
-                steps 
+                steps
                 {
-                    runParallelStage(paths, dockerArray, compiler_args, libTest) 
+                    script
                     {
-                        platform ->
-                        build.checkout(paths)
-                        platform.buildImage(this)
+                        runParallelStage(paths, dockerArray, compiler_args, libTest)
+                        {
+                            platform ->
+                            build.checkout(paths)
+                            platform.buildImage(this)
+                        }
                     }
                 }
             }
-            
+
             stage ("Compile")
             {
-                steps 
+                steps
                 {
-                    script 
+                    script
                     {
-                        def platforms =[:]
-
-                        for (platform in dockerArray)
+                        runParallelStage(paths, dockerArray, compiler_args, libTest)
                         {
-                            platforms[platform.jenkinsLabel] = platform
-                        }
-                        
-                        def action =
-                        { key ->
-                            def platform = platforms[key]
+                            platform ->
+                            paths.construct_build_prefix()
+                            def command = """#!/usr/bin/env bash
+                                      set -x
+                                      cd ${paths.project_build_prefix}
+                                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
+                                    """
 
-                            node (platform.jenkinsLabel)
-                            {
-                                stage ("${platform.jenkinsLabel}") 
-                                {
-                                    paths.construct_build_prefix()
-                                    def command = """#!/usr/bin/env bash
-                                              set -x
-                                              cd ${paths.project_build_prefix}
-                                              LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
-                                            """
-                                            
-                                    platform.runCommand(this, command)
-                                }
-                            }
+                            platform.runCommand(this, command)
                         }
-
-                        actions = [:]
-                        for (platform in platforms)
-                        {
-                            actions[platform.key] = action.curry(platform.key)
-                        }
-                        
-                        parallel actions
                     }
                 }
-            }            
+            }
         }
     }
 /*             stage ("Compile Library")
             {
-                parallel 
+                parallel
                 {
                     stage ("gfx900")
                     {
-                        agent 
+                        agent
                         {
-                            label "gfx900" 
+                            label "gfx900"
                         }
                         steps
                         {
@@ -94,22 +75,22 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                           cd ${paths.project_build_prefix}
                                           LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
                                         """
-                                        
+
                                 docker.runCommand(this, command)
                             }
                         }
-                    }                   
+                    }
                 }
             }
             stage ("Test Library")
             {
-                parallel 
+                parallel
                 {
                     stage ("gfx900")
                     {
-                        agent 
+                        agent
                         {
-                            label "gfx900" 
+                            label "gfx900"
                         }
                         steps
                         {
@@ -122,23 +103,23 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                                     LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
                                               """
                                 timeout(time: 4, unit: 'HOURS')
-                                {                                
+                                {
                                     docker.runCommand(this, command)
                                 }
                             }
                         }
-                    }                   
+                    }
                 }
             }
             stage ("Build Package")
                 {
-                    parallel 
+                    parallel
                     {
                         stage ("gfx900")
                         {
-                            agent 
+                            agent
                             {
-                                label "gfx900" 
+                                label "gfx900"
                             }
                             steps
                             {
@@ -152,19 +133,19 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                                         LD_LIBRARY_PATH=/opt/rocm/hcc/lib ${libTest.testCommand}
                                                   """
                                     timeout(time: 4, unit: 'HOURS')
-                                    {                                
+                                    {
                                         docker.runCommand(this, command)
                                     }
                                 }
                             }
-                        }                   
+                        }
                     }
-                }            
+                }
         }
     }  */
-        
+
 /*     stages{
-        
+
         stage ("Checkout source code")
         {
             build.checkout(paths)
@@ -191,7 +172,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                             hostname
                             echo "Format check disabled"
                             """
-                docker.runCommand(this, command1)                
+                docker.runCommand(this, command1)
                 }
             }
         }
@@ -204,9 +185,9 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                       cd ${paths.project_build_prefix}
                       LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
                     """
-                    
+
             docker.runCommand(this, command)
-            
+
             docker.image.inside(docker.runArgs)
             {
                   // Build library & clients
@@ -281,7 +262,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
             }
         }
     } */
-       
 
-    
+
+
 }
