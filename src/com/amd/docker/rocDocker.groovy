@@ -1,7 +1,7 @@
 /* ************************************************************************
  * Copyright 2018-2019 Advanced Micro Devices, Inc.
  * ************************************************************************ */
-package com.amd.rocDocker
+package com.amd.docker.rocDocker
 import java.nio.file.Path;
 
 // Docker related variables gathered together to reduce parameter bloat on function calls
