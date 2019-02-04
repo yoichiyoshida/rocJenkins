@@ -18,13 +18,15 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
         {
             stage ("Build Docker Container")
             {
-                runParallelStage(paths, dockerArray, compiler_args, libTest) 
+                steps 
                 {
-                    platform ->
-                    build.checkout(paths)
-                    platform.buildImage(this)
+                    runParallelStage(paths, dockerArray, compiler_args, libTest) 
+                    {
+                        platform ->
+                        build.checkout(paths)
+                        platform.buildImage(this)
+                    }
                 }
-
             }
             
             stage ("Compile")
