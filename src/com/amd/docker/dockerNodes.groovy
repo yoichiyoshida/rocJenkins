@@ -3,7 +3,7 @@
  * ************************************************************************ */
 
 import com.amd.project.*
-import com.amd.docker.rocDocker
+import com.amd.docker.dockerNodes
 
 
 import java.nio.file.Path;
