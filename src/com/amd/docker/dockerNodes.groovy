@@ -15,6 +15,7 @@ class dockerNodes implements Serializable
     
     dockerNodes(def jenkinsLabels = ['gfx900'], project_paths paths)
     {
+        dockerArray = [:]
         jenkinsLabels.each
         {
             dockerArray[it] = new rocDocker(
