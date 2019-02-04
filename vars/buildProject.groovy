@@ -22,7 +22,8 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                 {
                     script
                     {
-                        runParallelStage(paths, dockerArray, compiler_args, libTest)
+                        def dummy
+                        runParallelStage(paths, dockerArray, compiler_args, libTest, dummy)
                         {
                             platform ->
                             build.checkout(paths)
