@@ -53,20 +53,16 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         { key ->
                             def platform = platforms[key]
 
-                            final test = "${platform.jenkinsLabel}"
                             node (platform.jenkinsLabel)
                             {
                                 stage ("${platform.jenkinsLabel}") 
                                 {
-                                    echo "Test " +  "${platform.jenkinsLabel}" + test
                                     build.checkout(paths)
                                     platform.buildImage(this)
                                 }
                             }
-                        //    }
                         }
 
-                        
                         actions = [:]
                         for (platform in platforms)
                         {
@@ -74,28 +70,53 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                         }
                         
                         parallel actions
-/*                         {
-                            for (docker in dockerArray)
-                            {
-                                stage ("gfx900")
-                                {
-                                    agent 
-                                    {
-                                        label "gfx900" 
-                                    }
-                                    steps
-                                    {
-                                        script
-                                        {
-                                           docker.buildImage(this)
-                                        }
-                                    }
-                                }
-                            }
-                        } */
                     }
                 }
             }
+            
+            stage ("Compile")
+            {
+                steps 
+                {
+                    script 
+                    {
+                        def platforms =[:]
+
+                        for (platform in dockerArray)
+                        {
+                            platforms[platform.jenkinsLabel] = platform
+                        }
+                        
+                        def action =
+                        { key ->
+                            def platform = platforms[key]
+
+                            node (platform.jenkinsLabel)
+                            {
+                                stage ("${platform.jenkinsLabel}") 
+                                {
+                                    paths.construct_build_prefix()
+                                    def command = """#!/usr/bin/env bash
+                                              set -x
+                                              cd ${paths.project_build_prefix}
+                                              LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
+                                            """
+                                            
+                                    docker.runCommand(this, command)
+                                }
+                            }
+                        }
+
+                        actions = [:]
+                        for (platform in platforms)
+                        {
+                            actions[platform.key] = action.curry(platform.key)
+                        }
+                        
+                        parallel actions
+                    }
+                }
+            }            
         }
     }
 /*             stage ("Compile Library")
