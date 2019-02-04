@@ -12,11 +12,11 @@ def call(project_paths paths, def dockerArray, compiler_data compiler_args, rocT
 {
     def platforms =[:]
 
-    for (platform in dockerArray)
+/*    for (platform in dockerArray)
     {
         platforms[platform.jenkinsLabel] = platform
     }
-
+*/
     def action =
     { key ->
         def platform = platforms[key]
@@ -31,7 +31,7 @@ def call(project_paths paths, def dockerArray, compiler_data compiler_args, rocT
     }
 
     actions = [:]
-    for (platform in platforms)
+    for (platform in dockerArray)
     {
         actions[platform.key] = action.curry(platform.key)
     }
