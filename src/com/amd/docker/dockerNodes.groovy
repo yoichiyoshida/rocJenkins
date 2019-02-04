@@ -12,7 +12,7 @@ class dockerNodes implements Serializable
 {
     def dockerArray
     
-    dockerNodes(def jenkinsLabels = ['gfx900'], project_path paths)
+    dockerNodes(def jenkinsLabels = ['gfx900'], project_paths paths)
     {
         jenkinsLabels.each
         {
