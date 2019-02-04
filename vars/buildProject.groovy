@@ -42,34 +42,11 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                 {
                     script 
                     {
-                        def platforms =[:]
-
-                        for (platform in dockerArray)
+                        runParallelStage (dockerArray) 
                         {
-                            platforms[platform.jenkinsLabel] = platform
+                            build.checkout(paths)
+                            platform.buildImage(this)
                         }
-                        
-                        def action =
-                        { key ->
-                            def platform = platforms[key]
-
-                            node (platform.jenkinsLabel)
-                            {
-                                stage ("${platform.jenkinsLabel}") 
-                                {
-                                    build.checkout(paths)
-                                    platform.buildImage(this)
-                                }
-                            }
-                        }
-
-                        actions = [:]
-                        for (platform in platforms)
-                        {
-                            actions[platform.key] = action.curry(platform.key)
-                        }
-                        
-                        parallel actions
                     }
                 }
             }
