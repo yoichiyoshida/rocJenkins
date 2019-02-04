@@ -16,40 +16,15 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
 
          stages
         {
-/*            stage ("Checkout source code")
-            {
-                parallel 
-                {
-                    stage ("gfx906")
-                    {
-                        agent 
-                        {
-                            label "gfx900" 
-                        }
-                        steps
-                        {
-                            script
-                            {
-                                build.checkout(paths)
-                            }
-                        }
-                    } 
-                }
-            } */
             stage ("Build Docker Container")
             {
-                steps 
+                runParallelStage(paths, dockerArray, compiler_args, libTest) 
                 {
-                    script 
-                    {
-                        runParallelStage(paths, dockerArray, compiler_args, libTest) 
-                        {
-                            platform ->
-                            build.checkout(paths)
-                            platform.buildImage(this)
-                        }
-                    }
+                    platform ->
+                    build.checkout(paths)
+                    platform.buildImage(this)
                 }
+
             }
             
             stage ("Compile")

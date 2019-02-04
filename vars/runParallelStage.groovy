@@ -10,32 +10,37 @@ import java.nio.file.Path;
 
 def call(project_paths paths, def dockerArray, compiler_data compiler_args, rocTests libTest, Closure body)
 {
-    def platforms =[:]
-
-    for (platform in dockerArray)
+    steps 
     {
-        platforms[platform.jenkinsLabel] = platform
-    }
-
-    def action =
-    { key ->
-        def platform = platforms[key]
-
-        node (platform.jenkinsLabel)
+        script 
         {
-            stage ("${platform.jenkinsLabel}") 
+            def platforms =[:]
+
+            for (platform in dockerArray)
             {
-                body(platform)
+                platforms[platform.jenkinsLabel] = platform
             }
+
+            def action =
+            { key ->
+                def platform = platforms[key]
+
+                node (platform.jenkinsLabel)
+                {
+                    stage ("${platform.jenkinsLabel}") 
+                    {
+                        body(platform)
+                    }
+                }
+            }
+
+            actions = [:]
+            for (platform in platforms)
+            {
+                actions[platform.key] = action.curry(platform.key)
+            }
+
+            parallel actions
         }
     }
-
-    actions = [:]
-    for (platform in platforms)
-    {
-        actions[platform.key] = action.curry(platform.key)
-    }
-
-    parallel actions
-
 }
