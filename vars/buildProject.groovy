@@ -102,7 +102,7 @@ def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project
                                               LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
                                             """
                                             
-                                    docker.runCommand(this, command)
+                                    platform.runCommand(this, command)
                                 }
                             }
                         }
