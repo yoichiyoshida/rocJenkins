@@ -38,16 +38,26 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                 {
                     script
                     {
-                        runParallelStage(paths, dockerArray, compiler_args, libTest)
-                        {
-                            platform ->
+                        def compile = {
                             paths.construct_build_prefix()
                             def command = """#!/usr/bin/env bash
                                       set -x
                                       cd ${paths.project_build_prefix}
                                       LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
                                     """
-
+                        }
+                        
+                        runParallelStage(paths, dockerArray, compiler_args, libTest)
+                        {
+                            platform ->
+                            compile
+                            /*paths.construct_build_prefix()
+                            def command = """#!/usr/bin/env bash
+                                      set -x
+                                      cd ${paths.project_build_prefix}
+                                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
+                                    """
+                            */
                             platform.runCommand(this, command)
                         }
                     }
