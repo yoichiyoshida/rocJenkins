@@ -19,7 +19,7 @@ def call(project_paths paths, def dockerArray, compiler_data compiler_args, rocT
 */
     def action =
     { key ->
-        def platform = platforms[key]
+        def platform = dockerArray[key]
 
         node (platform.jenkinsLabel)
         {
