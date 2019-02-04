@@ -8,7 +8,7 @@ import com.amd.docker.rocDocker
 
 import java.nio.file.Path;
 
-def call(String nodeLogic, boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, rocTests libTest, Closure body)
+def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, rocTests libTest, Closure body)
 {
      pipeline
     {

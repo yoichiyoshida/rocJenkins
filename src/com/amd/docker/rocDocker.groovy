@@ -1,5 +1,5 @@
 /* ************************************************************************
- * Copyright 2018 Advanced Micro Devices, Inc.
+ * Copyright 2018-2019 Advanced Micro Devices, Inc.
  * ************************************************************************ */
 package com.amd.docker
 import java.nio.file.Path;
@@ -7,7 +7,7 @@ import java.nio.file.Path;
 // Docker related variables gathered together to reduce parameter bloat on function calls
 class rocDocker implements Serializable
 {
-    String baseImage
+    String baseImage = 'rocm/dev-ubuntu-16.04:2.0'
     String buildDockerfile
     String installDockerfile
     String runArgs
@@ -49,36 +49,36 @@ class rocDocker implements Serializable
 
     void runCommand(def stage, def command)
     {
-	image.inside(runArgs)
-	{
-	    stage.sh(command)
-	}
+    image.inside(runArgs)
+    {
+        stage.sh(command)
+    }
     }
     
 /*    
     void UploadDockerHub(String RemoteOrg)
     {
-	// Do not treat failures to push to docker-hub as a build fail
-	try
-	{
-	    sh  """#!/usr/bin/env bash
+    // Do not treat failures to push to docker-hub as a build fail
+    try
+    {
+        sh  """#!/usr/bin/env bash
           set -x
           echo inside sh
           docker tag ${local_org}/${image_name} ${remote_org}/${image_name}
         """
 
-	    docker_hub_image = image( "${remote_org}/${image_name}" )
+        docker_hub_image = image( "${remote_org}/${image_name}" )
 
-	    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-cred' )
-	    {
-		docker_hub_image.push( "${env.BUILD_NUMBER}" )
-		docker_hub_image.push( 'latest' )
-	    }
-	}
-	catch( err )
-	{
-	    currentBuild.result = 'SUCCESS'
-	}
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-cred' )
+        {
+        docker_hub_image.push( "${env.BUILD_NUMBER}" )
+        docker_hub_image.push( 'latest' )
+        }
+    }
+    catch( err )
+    {
+        currentBuild.result = 'SUCCESS'
+    }
     }
 */
 }
