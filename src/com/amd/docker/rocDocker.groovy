@@ -1,17 +1,17 @@
 /* ************************************************************************
  * Copyright 2018-2019 Advanced Micro Devices, Inc.
  * ************************************************************************ */
-package com.amd.docker
+package com.amd.rocDocker
 import java.nio.file.Path;
 
 // Docker related variables gathered together to reduce parameter bloat on function calls
 class rocDocker implements Serializable
 {
     String baseImage = 'rocm/dev-ubuntu-16.04:2.0'
-    String buildDockerfile
-    String installDockerfile
-    String runArgs
-    String buildArgs
+    String buildDockerfile = 'dockerfile-build-ubuntu-rock'
+    String installDockerfile = 'dockerfile-install-ubuntu'
+    String runArgs = '--device=/dev/kfd --device=/dev/dri --group-add=video'
+    String buildArgs = ' --pull'
     String buildImageName
     String jenkinsLabel
     

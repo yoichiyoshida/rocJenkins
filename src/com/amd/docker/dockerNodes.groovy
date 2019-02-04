@@ -1,6 +1,7 @@
 /* ************************************************************************
  * Copyright 2018-2019 Advanced Micro Devices, Inc.
  * ************************************************************************ */
+package com.amd.dockerNodes
 
 import com.amd.project.*
 import com.amd.docker.rocDocker
