@@ -8,60 +8,25 @@ import com.amd.docker.rocDocker
 
 import java.nio.file.Path;
 
-def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, def compileLibrary, rocTests libTest, Closure body)
+def call(rocProject project, def dockerArray, def compileCommand, def testCommand, def packageCommand, Closure body)
 {
-    def test = [:]
-    def temp =
-    {
-        {
-            stage ("Hello")
-            {
-                steps 
-                {
-                    script 
-                    {
-                        echo "Hello"
-                    }
-                }
-            }
-        }
-    }
-    test["Hello"] = temp
-    def temp2 =
-    {
-        stage ("bar")
-        {
-            steps 
-            {
-                script
-                {
-                    echo "bar"
-                }
-            }
-        }
-    }
-    
-    test["Bar"] = temp2
-     pipeline
+
+    pipeline
     {
         agent { label "master"}
 
-
-        stages temp 
-        
-        /*stages
+        stages
         {
-            stage ("Build Docker Container")
+            stage ("Docker")
             {
                 steps
                 {
                     script
                     {
-                        def dummy = {}
-                        runParallelStage(paths, dockerArray, compiler_args, libTest, dummy)
+                        runParallelStage(paths, dockerArray)
                         {
-                            platform, runCode ->
-                            build.checkout(paths)
+                            platform, project, runCode ->
+                            build.checkout(project.paths)
                             platform.buildImage(this)
                         }
                     }
@@ -69,6 +34,21 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
             }
 
             stage ("Compile")
+            {
+                steps
+                {
+                    script
+                    {
+                        runParallelStage(project, dockerArray, compileCommand)
+                        {
+                            platform, project, runCommand ->
+                            runCode.call(platform, paths, compiler_args, libTest)
+                        }
+                    }
+                }
+            }
+/*
+            stage ("Test")
             {
                 steps
                 {
@@ -82,8 +62,24 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                     }
                 }
             }
+
+            stage ("Package")
+            {
+                steps
+                {
+                    script
+                    {
+                        runParallelStage(paths, dockerArray, compiler_args, libTest, compileLibrary)
+                        {
+                            platform, runCode ->
+                            runCode.call(platform, paths, project)
+                        }
+                    }
+                }
+            }
+            */
         }
-        */
+
     }
 /*             stage ("Compile Library")
             {
