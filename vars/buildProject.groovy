@@ -10,40 +10,41 @@ import java.nio.file.Path;
 
 def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, def compileLibrary, rocTests libTest, Closure body)
 {
+    def test = [:]
+    def temp =
+    {
+        stage ("Hello")
+        {
+            steps 
+            {
+                script 
+                {
+                    echo "Hello"
+                }
+            }
+        }
+    }
+    test["Hello"] = temp
+    def temp2 =
+    {
+        stage ("bar")
+        {
+            steps 
+            {
+                script
+                {
+                    echo "bar"
+                }
+            }
+        }
+    }
+    
+    test["Bar"] = temp2
      pipeline
     {
         agent { label "master"}
 
-        def test = [:]
-        def temp =
-        {
-            stage ("Hello")
-            {
-                steps 
-                {
-                    script 
-                    {
-                        echo "Hello"
-                    }
-                }
-            }
-        }
-        test["Hello"] = temp
-        def temp2 =
-        {
-            stage ("bar")
-            {
-                steps 
-                {
-                    script
-                    {
-                        echo "bar"
-                    }
-                }
-            }
-        }
-        
-        test["Bar"] = temp2
+
         stages test
         
         stages
