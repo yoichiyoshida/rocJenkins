@@ -4,8 +4,8 @@
 
 package com.amd.project
 
-import com.amd.project.project_paths
-import com.amd.project.compiler_data
+//import com.amd.project.project_paths
+//import com.amd.project.compiler_data
 
 class rocProject implements Serializable
 {
@@ -13,7 +13,7 @@ class rocProject implements Serializable
     compiler_data compiler
     String name
     
-    def testDirectory = 'build/release'
+    String testDirectory = 'build/release'
     
     rocProject(String name)
     {
