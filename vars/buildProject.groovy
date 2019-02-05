@@ -54,7 +54,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 {
                     script
                     {
-                        runParallelStage(project, dockerArray, compileCommand)
+                        runParallelStage(project, dockerArray, testCommand)
                         {
                             platform, runCode ->
                             runCommand.call(platform,project)
@@ -69,7 +69,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 {
                     script
                     {
-                        runParallelStage(project, dockerArray, compileCommand)
+                        runParallelStage(project, dockerArray, packageCommand)
                         {
                             platform, runCode ->
                             runCode.call(platform, project)
