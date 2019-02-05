@@ -9,8 +9,8 @@ package com.amd.project
 
 class rocProject implements Serializable
 {
-    project_paths paths
-    compiler_data compiler
+    //project_paths paths
+    //compiler_data compiler
     String name
     
     String testDirectory = 'build/release'
@@ -18,8 +18,9 @@ class rocProject implements Serializable
     rocProject(String name)
     {
         this.name = name
-        paths = new project_paths(
+        /*paths = new project_paths(
             project_name: name+'-ubuntu' )
         compiler = new compiler_data()
+        */
     }
 }
