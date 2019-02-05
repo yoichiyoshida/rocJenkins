@@ -15,7 +15,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
         agent { label "master"}
 
         def test = [:]
-        test["Hello"] = 
+        def test["Hello"] = 
         {
             stage ("Hello")
             {
@@ -25,7 +25,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                 }
             }
         }
-        test["Bar"] = 
+        def test["Bar"] = 
         {
             stage ("bar")
             {
