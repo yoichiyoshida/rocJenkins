@@ -11,7 +11,7 @@ import com.amd.project.project_paths
 class rocProject implements Serializable
 {
     def paths
-    //compiler_data compiler
+    compiler_data compiler
     String name
     
     String testDirectory = 'build/release'
