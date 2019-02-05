@@ -13,7 +13,7 @@ class rocProject implements Serializable
     compiler_data compiler
     String name
     
-    testDirectory = 'build/release'
+    def testDirectory = 'build/release'
     
     rocProject(String name)
     {
