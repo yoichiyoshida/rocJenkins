@@ -25,7 +25,7 @@ def call(project_paths paths, def dockerArray, compiler_data compiler_args, rocT
         {
             stage ("${platform.jenkinsLabel}") 
             {
-                body(platform, runCode)
+                body(platform)
             }
         }
     }
