@@ -40,6 +40,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                     script
                     {
                         def runCode = {
+                            platform ->
                             paths.construct_build_prefix()
                             def command = """#!/usr/bin/env bash
                                       set -x
@@ -52,7 +53,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                         runParallelStage(paths, dockerArray, compiler_args, libTest, runCode)
                         {
                             platform ->
-                            runCode.call()
+                            runCode.call(platform)
                             /*paths.construct_build_prefix()
                             def command = """#!/usr/bin/env bash
                                       set -x
