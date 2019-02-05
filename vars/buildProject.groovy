@@ -14,7 +14,30 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
     {
         agent { label "master"}
 
-         stages
+        def test = [:]
+        test["Hello"] = 
+        {
+            stage ("Hello")
+            {
+                steps 
+                {
+                    echo "Hello"
+                }
+            }
+        }
+        test["Bar"] = 
+        {
+            stage ("bar")
+            {
+                steps 
+                {
+                    echo "bar"
+                }
+            }
+        }
+        stages test
+        
+        stages
         {
             stage ("Build Docker Container")
             {
@@ -39,17 +62,6 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                 {
                     script
                     {
-                        /*def runCode = {
-                            platform ->
-                            paths.construct_build_prefix()
-                            def command = """#!/usr/bin/env bash
-                                      set -x
-                                      cd ${paths.project_build_prefix}
-                                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
-                                    """
-                            platform.runCommand(this, command)
-                        }*/
-                        
                         runParallelStage(paths, dockerArray, compiler_args, libTest, compileLibrary)
                         {
                             platform, runCode ->
