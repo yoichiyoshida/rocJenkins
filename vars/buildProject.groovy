@@ -23,9 +23,9 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 {
                     script
                     {
-                        runParallelStage(paths, dockerArray)
+                        runParallelStage(project, paths, dockerArray)
                         {
-                            platform, project, runCode ->
+                            platform, runCode ->
                             build.checkout(project.paths)
                             platform.buildImage(this)
                         }
@@ -41,7 +41,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                     {
                         runParallelStage(project, dockerArray, compileCommand)
                         {
-                            platform, project, runCommand ->
+                            platform, runCommand ->
                             runCode.call(platform, paths, compiler_args, libTest)
                         }
                     }
