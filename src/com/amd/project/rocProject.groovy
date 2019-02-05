@@ -4,11 +4,12 @@
 
 package com.amd.project
 
-import com.amd.project.*
+import com.amd.project.project_paths
+import com.amd.project.compiler_data
 
 class rocProject implements Serializable
 {
-    com.amd.project.project_paths paths
+    project_paths paths
     compiler_data compiler
     String name
     
