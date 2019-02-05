@@ -8,7 +8,7 @@ import com.amd.project.*
 
 class rocProject implements Serializable
 {
-    project_paths paths
+    com.amd.project.project_paths paths
     compiler_data compiler
     String name
     
