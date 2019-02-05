@@ -52,7 +52,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                         
                         runParallelStage(paths, dockerArray, compiler_args, libTest, compileLibrary)
                         {
-                            platform ->
+                            platform, runCode ->
                             runCode.call(platform, paths, compiler_args, libTest)
                         }
                     }
