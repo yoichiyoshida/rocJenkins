@@ -8,7 +8,7 @@ import com.amd.docker.rocDocker
 
 import java.nio.file.Path;
 
-def call(project_paths paths, def dockerArray, compiler_data compiler_args, rocTests libTest, def runCode = {}, Closure body)
+def call(rocProject paths, def dockerArray, def runCode = {}, Closure body)
 {
     def platforms =[:]
 
