@@ -13,13 +13,15 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
     def test = [:]
     def temp =
     {
-        stage ("Hello")
         {
-            steps 
+            stage ("Hello")
             {
-                script 
+                steps 
                 {
-                    echo "Hello"
+                    script 
+                    {
+                        echo "Hello"
+                    }
                 }
             }
         }
