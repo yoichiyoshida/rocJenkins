@@ -47,7 +47,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
 
         stages test
         
-        stages
+        /*stages
         {
             stage ("Build Docker Container")
             {
@@ -81,6 +81,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                 }
             }
         }
+        */
     }
 /*             stage ("Compile Library")
             {
