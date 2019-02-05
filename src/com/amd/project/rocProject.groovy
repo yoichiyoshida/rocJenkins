@@ -19,9 +19,9 @@ class rocProject implements Serializable
     rocProject(String name)
     {
         this.name = name
-        /*paths = new project_paths(
+        paths = new project_paths(
             project_name: name+'-ubuntu' )
         compiler = new compiler_data()
-        */
+        
     }
 }
