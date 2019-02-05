@@ -78,7 +78,9 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 }
             }
             
+            script {
             body()
+            }
         }
     }
 }
