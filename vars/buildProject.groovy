@@ -8,7 +8,7 @@ import com.amd.docker.rocDocker
 
 import java.nio.file.Path;
 
-def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, rocTests libTest, Closure body)
+def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def dockerArray, compiler_data compiler_args, def compileLibrary, rocTests libTest, Closure body)
 {
      pipeline
     {
@@ -39,7 +39,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                 {
                     script
                     {
-                        def runCode = {
+                        /*def runCode = {
                             platform ->
                             paths.construct_build_prefix()
                             def command = """#!/usr/bin/env bash
@@ -48,20 +48,12 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                                       LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
                                     """
                             platform.runCommand(this, command)
-                        }
+                        }*/
                         
-                        runParallelStage(paths, dockerArray, compiler_args, libTest, runCode)
+                        runParallelStage(paths, dockerArray, compiler_args, libTest, compileLibrary)
                         {
                             platform ->
-                            runCode.call(platform)
-                            /*paths.construct_build_prefix()
-                            def command = """#!/usr/bin/env bash
-                                      set -x
-                                      cd ${paths.project_build_prefix}
-                                      LD_LIBRARY_PATH=/opt/rocm/hcc/lib CXX=${compiler_args.compiler_path} ${paths.build_command}
-                                    """
-                            */
-                            //platform.runCommand(this, command)
+                            runCode.call(platform, paths, compiler_args, libTest)
                         }
                     }
                 }
