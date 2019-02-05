@@ -12,16 +12,16 @@ import java.nio.file.Path;
 class dockerNodes implements Serializable
 {
     def dockerArray
-    
-    dockerNodes(def jenkinsLabels = ['gfx900'], project_paths paths)
+
+    dockerNodes(def jenkinsGPULabels = ['gfx900'], string rocmVersion = 'rocm20', project_paths paths)
     {
         dockerArray = [:]
-        jenkinsLabels.each
+        jenkinsGPULabels.each
         {
             dockerArray[it] = new rocDocker(
                             buildImageName:'build-rocprim-hip-artifactory',
                             paths: paths,
-                            jenkinsLabel: it
+                            jenkinsLabel: it + ' && ' + rocmVersion
                         )
         }
     }
