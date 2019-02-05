@@ -21,7 +21,7 @@ class dockerNodes implements Serializable
             dockerArray[it] = new rocDocker(
                             buildImageName:'build-rocprim-hip-artifactory',
                             paths: paths,
-                            jenkinsLabel: it + ' && ' + rocmVersion
+                            jenkinsLabel: it + " && " + rocmVersion
                         )
         }
     }
