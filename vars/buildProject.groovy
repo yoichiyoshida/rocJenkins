@@ -45,7 +45,9 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
         agent { label "master"}
 
 
-        stages test
+        stages {
+            test.call()
+        }
         
         /*stages
         {
