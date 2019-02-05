@@ -25,7 +25,7 @@ def call(boolean runFormatCheck, boolean buildPackage, project_paths paths, def 
                         def dummy = {}
                         runParallelStage(paths, dockerArray, compiler_args, libTest, dummy)
                         {
-                            platform ->
+                            platform, runCode ->
                             build.checkout(paths)
                             platform.buildImage(this)
                         }
