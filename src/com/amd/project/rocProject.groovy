@@ -9,7 +9,6 @@ import com.amd.project.compiler_data
 
 class rocProject implements Serializable
 {
-/*
     project_paths paths
     compiler_data compiler
     String name
@@ -23,5 +22,4 @@ class rocProject implements Serializable
             project_name: name+'-ubuntu' )
         compiler = new compiler_data()
     }
-    */
 }
