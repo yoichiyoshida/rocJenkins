@@ -23,7 +23,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 {
                     script
                     {
-                        runParallelStage(project, paths, dockerArray)
+                        runParallelStage(project, dockerArray)
                         {
                             platform, runCommand ->
                             build.checkout(project.paths)
