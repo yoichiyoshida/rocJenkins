@@ -4,11 +4,9 @@
 
 import com.amd.project.*
 import com.amd.docker.rocDocker
-
-
 import java.nio.file.Path;
 
-def call(rocProject project, def dockerArray, def compileCommand, def testCommand, def packageCommand, Closure body)
+def call(rocProject project, def dockerArray, def compileCommand, def testCommand, def packageCommand)
 {
 
     pipeline
@@ -56,13 +54,13 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                     {
                         runParallelStage(project, dockerArray, testCommand)
                         {
-                            platform, runCode ->
+                            platform, runCommand ->
                             runCommand.call(platform,project)
                         }
                     }
                 }
             }
-            
+
             stage ("Package")
             {
                 steps
@@ -71,8 +69,8 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                     {
                         runParallelStage(project, dockerArray, packageCommand)
                         {
-                            platform, runCode ->
-                            runCode.call(platform, project)
+                            platform, runCommand ->
+                            runCommand.call(platform, project)
                         }
                     }
                 }
