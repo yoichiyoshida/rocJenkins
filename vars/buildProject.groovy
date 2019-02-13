@@ -14,7 +14,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
 
         node (platform.jenkinsLabel)
         {
-            stage ("${platform.jenkinsLabel}" + "Docker") 
+            stage ("Docker " + "${platform.jenkinsLabel}") 
             {
                 build.checkout(project.paths)
                 platform.buildImage(this)
@@ -23,6 +23,16 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
             stage ("Compile " + "${platform.jenkinsLabel}")
             {            
                 compileCommand.call(platform,project)
+            }
+            
+            stage ("Test"+ "${platform.jenkinsLabel}")
+            {
+                testCommand.call(platform, project)
+            }
+            
+            stage ("Package")
+            {
+                packageCommand.call(platform, project)
             }
         }
     }
