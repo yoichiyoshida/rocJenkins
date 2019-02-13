@@ -8,8 +8,28 @@ import java.nio.file.Path;
 
 def call(rocProject project, def dockerArray, def compileCommand, def testCommand, def packageCommand)
 {
+    def action =
+    { key ->
+        def platform = dockerArray[key]
 
-    pipeline
+        node (platform.jenkinsLabel)
+        {
+            stage ("${platform.jenkinsLabel}" + "Docker") 
+            {
+                build.checkout(project.paths)
+                platform.buildImage(this)
+            }
+        }
+    }
+
+    actions = [:]
+    for (platform in dockerArray)
+    {
+        actions[platform.key] = action.curry(platform.key)
+    }
+
+    parallel actions
+/*    pipeline
     {
         agent { label "master"}
 
@@ -77,4 +97,5 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
             }
         }
     }
+*/
 }
