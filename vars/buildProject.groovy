@@ -19,6 +19,11 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 build.checkout(project.paths)
                 platform.buildImage(this)
             }
+            
+            stage ("Compile " + "${platform.jenkinsLabel}")
+            {            
+                compileCommand.call(platform,project)
+            }
         }
     }
 
