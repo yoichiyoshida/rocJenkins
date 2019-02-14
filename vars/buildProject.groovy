@@ -20,17 +20,31 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 platform.buildImage(this)
             }
             
+            stage ("Format Check")
+            {
+                sh '''
+                    find . -iname \'*.h\' \
+                        -o -iname \'*.hpp\' \
+                        -o -iname \'*.cpp\' \
+                        -o -iname \'*.h.in\' \
+                        -o -iname \'*.hpp.in\' \
+                        -o -iname \'*.cpp.in\' \
+                    | grep -v 'build/' \
+                    | xargs -n 1 -P 1 -I{} -t sh -c \'clang-format-3.8 -style=file {} | diff - {}\'
+                '''
+            }
+            
             stage ("Compile " + "${platform.jenkinsLabel}")
             {            
                 compileCommand.call(platform,project)
             }
             
-            stage ("Test"+ "${platform.jenkinsLabel}")
+            stage ("Test "+ "${platform.jenkinsLabel}")
             {
                 testCommand.call(platform, project)
             }
             
-            stage ("Package")
+            stage ("Package ")
             {
                 packageCommand.call(platform, project)
             }
@@ -44,6 +58,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
     }
 
     parallel actions
+
 /*    pipeline
     {
         agent { label "master"}
