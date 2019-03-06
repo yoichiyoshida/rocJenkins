@@ -22,7 +22,8 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
             
             stage ("Format Check")
             {
-                sh '''
+                
+		formatCommand = sh '''
                     find . -iname \'*.h\' \
                         -o -iname \'*.hpp\' \
                         -o -iname \'*.cpp\' \
@@ -32,6 +33,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                     | grep -v 'build/' \
                     | xargs -n 1 -P 1 -I{} -t sh -c \'clang-format-3.8 -style=file {} | diff - {}\'
                 '''
+		platform.runCommand(this, formatCommand)
             }
             
             stage ("Compile " + "${platform.jenkinsLabel}")
