@@ -12,7 +12,7 @@ class rocDocker implements Serializable
     String buildDockerfile = 'dockerfile-build-ubuntu-rock'
     String installDockerfile = 'dockerfile-install-ubuntu'
     String runArgs = '--device=/dev/kfd --device=/dev/dri --group-add=video'
-    String buildrgs = ' --pull'
+    String buildArgs = ' --pull'
     String buildImageName
     String jenkinsLabel
     
