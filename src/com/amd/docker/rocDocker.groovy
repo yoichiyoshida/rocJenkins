@@ -12,7 +12,7 @@ class rocDocker implements Serializable
     String buildDockerfile = 'dockerfile-build-ubuntu-rock'
     String installDockerfile = 'dockerfile-install-ubuntu'
     String runArgs = '--device=/dev/kfd --device=/dev/dri --group-add=video'
-    String buildArgs = ' --pull'
+    String buildrgs = ' --pull'
     String buildImageName
     String jenkinsLabel
     
@@ -38,7 +38,7 @@ class rocDocker implements Serializable
                 // build_image = docker.build( "${paths.project_name}/${build_image_name}:latest", "--pull -f docker/${buildDockerfile} --build-arg user_uid=${user_uid} --build-arg base_image=${from_image} ." )
                 
                 // JENKINS-44836 workaround by using a bash script instead of docker.build()
-                stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${installDockerfile} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
+                stage.sh "docker build -t ${paths.project_name}/${buildImageName}:latest -f docker/${buildDockerfile} ${buildArgs} --build-arg user_uid=${user_uid} --build-arg base_image=${baseImage} ."
                 image = stage.docker.image( "${paths.project_name}/${buildImageName}:latest" )
                 // Print system information for the log
                 image.inside( runArgs )
