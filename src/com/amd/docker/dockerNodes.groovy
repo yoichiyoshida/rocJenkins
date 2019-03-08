@@ -13,7 +13,7 @@ class dockerNodes implements Serializable
 {
     def dockerArray
 
-    dockerNodes(def jenkinsGPULabels = ['gfx900'], String rocmVersion = 'rocm20', rocProjet prj)
+    dockerNodes(def jenkinsGPULabels = ['gfx900'], String rocmVersion = 'rocm20', rocProject prj)
     {
         dockerArray = [:]
         jenkinsGPULabels.each
