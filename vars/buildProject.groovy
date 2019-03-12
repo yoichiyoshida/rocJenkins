@@ -23,7 +23,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
             stage ("Format Check")
             {
                 
-		formatCommand = sh '''
+		formatCommand =  '''
                     find . -iname \'*.h\' \
                         -o -iname \'*.hpp\' \
                         -o -iname \'*.cpp\' \
