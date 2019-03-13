@@ -50,10 +50,18 @@ class rocDocker implements Serializable
 
     void runCommand(def stage, def command)
     {
-    image.inside(runArgs)
-    {
-        stage.sh(command)
+	image.inside(runArgs)
+	{
+            stage.sh(command)
+	}
     }
+
+    void archiveArtifacts(def stage, String artifacts)
+    {
+	image.inside(runArgs)
+	{
+	    archiveArtifacts artifacts: artifacts, fingerprint: true
+	}
     }
     
 /*    
