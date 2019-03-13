@@ -19,7 +19,7 @@ def call(rocProject project, boolean formatCheck, def dockerArray, def compileCo
                 build.checkout(project.paths)
                 platform.buildImage(this)
             }
-            if formatCheck
+            if (formatCheck)
 	    {
 		stage ("Format Check " + "${platform.jenkinsLabel}")
 		{
