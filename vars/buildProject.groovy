@@ -20,7 +20,7 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 platform.buildImage(this)
             }
             
-            stage ("Format Check" + "${platform.jenkinsLabel}")
+            stage ("Format Check " + "${platform.jenkinsLabel}")
             {
                 
 		formatCommand =  '''
