@@ -6,7 +6,7 @@ import com.amd.project.*
 import com.amd.docker.rocDocker
 import java.nio.file.Path;
 
-def call(rocProject project, def dockerArray, def compileCommand, def testCommand, def packageCommand)
+def call(rocProject project, boolean formatCheck, def dockerArray, def compileCommand, def testCommand, def packageCommand)
 {
     def action =
     { key ->
@@ -19,11 +19,12 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 build.checkout(project.paths)
                 platform.buildImage(this)
             }
-            
-            stage ("Format Check " + "${platform.jenkinsLabel}")
-            {
+            if formatCheck
+	    {
+		stage ("Format Check " + "${platform.jenkinsLabel}")
+		{
                 
-		formatCommand =  '''
+		    formatCommand =  '''
                     find . -iname \'*.h\' \
                         -o -iname \'*.hpp\' \
                         -o -iname \'*.cpp\' \
@@ -32,10 +33,10 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                         -o -iname \'*.cpp.in\' \
                     | grep -v 'build/' \
                     | xargs -n 1 -P 1 -I{} -t sh -c \'clang-format-3.8 -style=file {} | diff - {}\'
-                '''
-		platform.runCommand(this, formatCommand)
+                    '''
+		    platform.runCommand(this, formatCommand)
             }
-            
+            }
             stage ("Compile " + "${platform.jenkinsLabel}")
             {            
                 compileCommand.call(platform,project)
