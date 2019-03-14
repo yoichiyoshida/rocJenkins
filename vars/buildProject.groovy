@@ -6,7 +6,11 @@ import com.amd.project.*
 import com.amd.docker.rocDocker
 import java.nio.file.Path;
 
+<<<<<<< HEAD
 def call(rocProject project, def dockerArray, def compileCommand, def testCommand, def packageCommand)
+=======
+def call(rocProject project, boolean formatCheck, def dockerArray, def compileCommand, def testCommand, def packageCommand)
+>>>>>>> develop
 {
     def action =
     { key ->
@@ -19,10 +23,19 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                 build.checkout(project.paths)
                 platform.buildImage(this)
             }
+<<<<<<< HEAD
             
             stage ("Format Check")
             {
                 sh '''
+=======
+            if (formatCheck)
+	    {
+		stage ("Format Check " + "${platform.jenkinsLabel}")
+		{
+                
+		    formatCommand =  '''
+>>>>>>> develop
                     find . -iname \'*.h\' \
                         -o -iname \'*.hpp\' \
                         -o -iname \'*.cpp\' \
@@ -31,20 +44,35 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
                         -o -iname \'*.cpp.in\' \
                     | grep -v 'build/' \
                     | xargs -n 1 -P 1 -I{} -t sh -c \'clang-format-3.8 -style=file {} | diff - {}\'
+<<<<<<< HEAD
                 '''
             }
             
+=======
+                    '''
+		    platform.runCommand(this, formatCommand)
+            }
+            }
+>>>>>>> develop
             stage ("Compile " + "${platform.jenkinsLabel}")
             {            
                 compileCommand.call(platform,project)
             }
             
+<<<<<<< HEAD
             stage ("Test "+ "${platform.jenkinsLabel}")
+=======
+            stage ("Test " + "${platform.jenkinsLabel}")
+>>>>>>> develop
             {
                 testCommand.call(platform, project)
             }
             
+<<<<<<< HEAD
             stage ("Package ")
+=======
+            stage ("Package " + "${platform.jenkinsLabel}")
+>>>>>>> develop
             {
                 packageCommand.call(platform, project)
             }
@@ -128,4 +156,8 @@ def call(rocProject project, def dockerArray, def compileCommand, def testComman
         }
     }
 */
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> develop

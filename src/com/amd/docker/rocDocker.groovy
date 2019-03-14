@@ -8,7 +8,11 @@ import java.nio.file.Path;
 // Docker related variables gathered together to reduce parameter bloat on function calls
 class rocDocker implements Serializable
 {
+<<<<<<< HEAD
     String baseImage = 'rocm/dev-ubuntu-16.04:2.0'
+=======
+    String baseImage = 'rocm/dev-ubuntu-16.04:2.2'
+>>>>>>> develop
     String buildDockerfile = 'dockerfile-build-ubuntu-rock'
     String installDockerfile = 'dockerfile-install-ubuntu'
     String runArgs = '--device=/dev/kfd --device=/dev/dri --group-add=video'
@@ -50,10 +54,25 @@ class rocDocker implements Serializable
 
     void runCommand(def stage, def command)
     {
+<<<<<<< HEAD
     image.inside(runArgs)
     {
         stage.sh(command)
     }
+=======
+	image.inside(runArgs)
+	{
+            stage.sh(command)
+	}
+    }
+
+    void archiveArtifacts(def stage, String artifactName)
+    {
+	image.inside(runArgs)
+	{
+	    stage.archiveArtifacts artifacts: artifactName, fingerprint: true
+	}
+>>>>>>> develop
     }
     
 /*    
