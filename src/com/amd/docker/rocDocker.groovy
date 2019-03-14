@@ -60,7 +60,7 @@ class rocDocker implements Serializable
     {
 	image.inside(runArgs)
 	{
-	    archiveArtifacts artifacts: artifactName, fingerprint: true
+	    stage.archiveArtifacts artifacts: artifactName, fingerprint: true
 	}
     }
     
