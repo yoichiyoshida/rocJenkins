@@ -1,5 +1,4 @@
 # rocJENKINS
-=======
 Shared Libraries for rocm Jenkins continuous integration intended for internal AMD use.
 
 ## Style Guide
