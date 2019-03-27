@@ -15,13 +15,21 @@ class rocProject implements Serializable
     String name
     
     String testDirectory = 'build/release'
+
+    def timeout
     
+    class timeoutData
+    {
+	int compile = 2
+	int test = 4
+    }
+
     rocProject(String name)
     {
         this.name = name
         paths = new project_paths(
             project_name: name+'-ubuntu' )
         compiler = new compiler_data()
-        
+        timeout = new timeoutData()
     }
 }

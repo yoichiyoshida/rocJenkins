@@ -38,13 +38,19 @@ def call(rocProject project, boolean formatCheck, def dockerArray, def compileCo
 		 }
             }
             stage ("Compile " + "${platform.jenkinsLabel}")
-            {            
-                compileCommand.call(platform,project)
+            {   
+		timeout(time: project.timeout.compile, unit: 'HOURS')
+		{
+                    compileCommand.call(platform,project)
+		}
             }
             
             stage ("Test " + "${platform.jenkinsLabel}")
             {
-                testCommand.call(platform, project)
+		timeout(time: project.timeout.test, unit: 'HOURS')
+		{
+		    testCommand.call(platform, project)
+		}
             }
             
             stage ("Package " + "${platform.jenkinsLabel}")
